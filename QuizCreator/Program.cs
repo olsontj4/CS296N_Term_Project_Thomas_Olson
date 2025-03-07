@@ -1,16 +1,21 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuizCreator.Data;
+using QuizCreator.Models;
 using QuizCreator.Repos;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddTransient<IRepo, Repo>();
+        builder.Services.AddIdentity<AppUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
         var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
         builder.Services.AddDbContext<AppDbContext>(options =>
@@ -31,6 +36,7 @@ internal class Program
         app.UseRouting();
 
         app.UseAuthorization();
+        app.UseAuthentication();
 
         app.MapControllerRoute(
             name: "default",
@@ -39,9 +45,8 @@ internal class Program
         // Get a DbContext object
         using (var scope = app.Services.CreateScope())
         {
-            var dbContext = scope.ServiceProvider
-                .GetRequiredService<AppDbContext>();
-            SeedData.Seed(dbContext);
+            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            await SeedData.SeedAsync(context, scope.ServiceProvider);
         }
 
         app.Run();

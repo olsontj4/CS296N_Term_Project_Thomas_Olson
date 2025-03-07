@@ -1,34 +1,27 @@
-﻿using QuizCreator.Models;
-using System.Runtime.CompilerServices;
+﻿using Microsoft.AspNetCore.Identity;
+using QuizCreator.Models;
 
 namespace QuizCreator.Data
 {
     public class SeedData
     {
-        public static void Seed(AppDbContext context)
+        public static async Task SeedAsync(AppDbContext context, IServiceProvider serviceProvider)
         {
-            if (!context.Quizzes.Any())  // this is to prevent adding duplicate data
+            var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            if (!(context.Quizzes.Any() || context.Users.Any())) // this is to prevent adding duplicate data
             {
-                AppUser thomasj041 = new AppUser { UserName = "Thomasj041" };  // Create User objects
-                AppUser than = new AppUser { UserName = "Than" };
-                AppUser logan = new AppUser { UserName = "Logan" };
-                AppUser chatGPT = new AppUser { UserName = "ChatGPT" };
-                AppUser dylan = new AppUser() { UserName = "Dylan" };
-                AppUser thomasJefferson = new AppUser() { UserName = "Thomas Jefferson" };
-                AppUser jonathonMath = new AppUser() { UserName = "Jonathon Math" };
-                AppUser profBird = new AppUser() { UserName = "ProfBird" };
-                AppUser max = new AppUser() { UserName = "max" };
-                AppUser pikachew3 = new AppUser() { UserName = "Pikachew3" };
-                context.AppUsers.Add(thomasj041);  // Queue up user objects to be saved to the DB
-                context.AppUsers.Add(than);
-                context.AppUsers.Add(logan);
-                context.AppUsers.Add(chatGPT);
-                context.AppUsers.Add(dylan);
-                context.AppUsers.Add(thomasJefferson);
-                context.AppUsers.Add(jonathonMath);
-                context.AppUsers.Add(profBird);
-                context.AppUsers.Add(max);
-                context.AppUsers.Add(pikachew3);
+                const string PASSWORD = "Secret!123";
+                List<string> userNames = new() { "Thomasj041", "Than", "Logan", "ChatGPT", "Dylan", "Thomas Jefferson", "Jonathon Math", "ProfBird", "max", "Pikachew3" };
+                var appUsers = new List<AppUser>();
+                for (var i = 0; i < userNames.Count; i++)
+                {
+                    appUsers.Add(new AppUser { UserName = userNames[i] });
+                    var result = await userManager.CreateAsync(appUsers[i], PASSWORD);
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception($"Failed to create user {userNames[i]}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                    }
+                }
                 context.SaveChanges();  // Saving adds UserId to User objects
                 Quiz quiz1 = new Quiz()
                 {
@@ -36,7 +29,7 @@ namespace QuizCreator.Data
                     Title = "Are you in the Kool Kids Klub?",
                     Description = "Take this quiz to figure out if you're a true Kool Kid!",
                     Type = "Trivia",
-                    AppUser = thomasj041,
+                    AppUser = appUsers[0],
                     Date = DateTime.Parse("12/04/2024"),
                     IsComplete = true,
                     Questions = new List<Question>()
@@ -89,7 +82,7 @@ namespace QuizCreator.Data
                     Title = "Are you Than?",
                     Description = "Take this quiz to figure out if you're a certified Than!",
                     Type = "Trivia",
-                    AppUser = than,
+                    AppUser = appUsers[1],
                     Date = DateTime.Parse("12/06/2024"),
                     IsComplete = true,
                     Questions = new List<Question>()
@@ -190,7 +183,7 @@ namespace QuizCreator.Data
                     Title = "What Disney Princess are you?",
                     Description = "What Pixar Princess are you?",
                     Type = "Trivia",
-                    AppUser = logan,
+                    AppUser = appUsers[2],
                     Date = DateTime.Parse("04/01/1987"),
                     IsComplete = true,
                     Questions = new List<Question>()
@@ -561,7 +554,7 @@ namespace QuizCreator.Data
                     Title = "Are You a Coding Master?",
                     Description = "Take this quiz to see how well you know coding concepts and practices!",
                     Type = "Trivia",
-                    AppUser = chatGPT,
+                    AppUser = appUsers[3],
                     Date = DateTime.Parse("12/07/2024"),
                     IsComplete = true,
                     Questions = new List<Question>()
@@ -698,7 +691,7 @@ namespace QuizCreator.Data
                     Title = "Are you procrastinating right now?",
                     Description = "Do you really have time for this?",
                     Type = "Trivia",
-                    AppUser = dylan,
+                    AppUser = appUsers[4],
                     Date = DateTime.Parse("12/09/2024"),
                     IsComplete = true,
                     Questions = new List<Question>()
@@ -840,7 +833,7 @@ namespace QuizCreator.Data
                     Title = "Insect Trivia",
                     Description = "Are you a true insect expert? Take this quiz to find out!",
                     Type = "Trivia",
-                    AppUser = than,
+                    AppUser = appUsers[1],
                     Date = DateTime.Parse("12/04/2024"),
                     IsComplete = true,
                     Questions = new List<Question>()
@@ -1010,7 +1003,7 @@ namespace QuizCreator.Data
                     Title = "Does Thomas deserve an A?",
                     Description = "Or maybe even an A+... 👀",
                     Type = "Trivia",
-                    AppUser = thomasJefferson,
+                    AppUser = appUsers[5],
                     Date = DateTime.Parse("2024-12-09T18:13:42.913606"),
                     IsComplete = true,
                     Questions = new List<Question>()

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using QuizCreator.Models;
 
 namespace QuizCreator.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         // constructor just calls the base class constructor
         public AppDbContext(
@@ -11,6 +12,5 @@ namespace QuizCreator.Data
         // one DbSet for each domain model class
         public DbSet<Quiz> Quizzes { get; set; }
         //public DbSet<Question> Questions { get; set; }
-        public DbSet<AppUser> AppUsers { get; set; }
     }
 }
