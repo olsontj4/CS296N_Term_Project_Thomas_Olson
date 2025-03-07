@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QuizCreator.Models
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-        public int Id { get; set; }
-        [Required(AllowEmptyStrings = false)]
-        public string UserName { get; set; }
+        public DateTime SignUpDate { get; set; }
+        [NotMapped]
+        public IList<string>? RoleNames { get; set; }
     }
 }
