@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
 
 namespace QuizCreator.Controllers
 {
+    [Authorize]
     public class EditorController : Controller
     {
         private readonly IRepo repo;

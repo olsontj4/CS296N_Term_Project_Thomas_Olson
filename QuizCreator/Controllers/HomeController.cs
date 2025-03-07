@@ -27,12 +27,6 @@ namespace QuizCreator.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult UserPage(AppUser user)
-        {
-            List<Quiz> quizzes = new();
-            return View();
-        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
