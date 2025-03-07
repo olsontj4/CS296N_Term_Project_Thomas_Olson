@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<Quiz>
+<div class="text-center">
+    <h1 class="display-4">Thomas' Quiz Creator</h1>
+    <p>The best quiz creator in the universe!</p>
+</div>
+<article class="container">
+    <h2>Featured Quizzes:</h2>
+    <div class="row h-100">
+        <div class="card bg-dark-subtle col-lg-4 col-md-6 col-sm-12 col-12 h-100 mb-3 text-center">
+            <h3>@Model[0].Title</h3>
+            <p>@Model[0].Description</p>
+            <p class="text-start float-start">Author: @Model[0].AppUser.UserName &nbsp;</p>
+            <p class="text-sm-start text-start float-start float-sm-end">Posted on: @Model[0].Date.Value.ToShortDateString()</p>
+            <a asp-controller="Quiz" asp-action="Quiz" asp-route-id="@Model[0].Id" type="submit" class="stretched-link"></a>
+        </div>
+    </div>
+</article>

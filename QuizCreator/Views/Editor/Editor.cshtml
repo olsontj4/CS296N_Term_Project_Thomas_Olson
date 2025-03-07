@@ -1,0 +1,68 @@
+﻿@using QuizCreator.Models.ViewModels
+@{
+    ViewData["Title"] = "Edit a Quiz";
+}
+@model SearchVM
+<div class="text-center">
+    <h1>@ViewData["Title"]:</h1>
+    <hr />
+</div>
+<div class="container mb-3">
+    <form asp-controller="Quiz" asp-action="Search">
+        <div class="input-group">
+            <input class="form-control mr-sm-2" type="search" name="Search" value="" placeholder="Search..." id="Search" aria-label="Search..." aria-describedby="SearchButton" />
+            <button class="btn btn-outline-primary" type="submit" id="SearchButton">Submit</button>
+        </div>
+    </form>
+</div>
+<article class="container-fluid" style="min-height: 200px;">
+    <div class="row h-100">
+        @if (Model.SupressWarning == true)
+        {
+            if (Model.Quizzes.Count != 0)
+            {
+                foreach (Quiz quiz in Model.Quizzes)
+                {
+                    <div class="card bg-dark-subtle col-lg-3 col-md-4 col-sm-6 col-12 h-100 mb-3 text-center">
+                        <h3>@quiz.Title</h3>
+                        <p>@quiz.Description</p>
+                        <p class="text-start float-start">Author: @quiz.AppUser.UserName &nbsp;</p>
+                        <p class="text-sm-start text-start float-start float-sm-end">Posted on: @quiz.Date.Value.ToShortDateString()</p>
+                        <a asp-controller="Quiz" asp-action="Quiz" asp-route-id="@quiz.Id" type="submit" class="stretched-link"></a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center">
+                    <p class="text-danger">No quizzes found.</p>
+                </div>
+            }
+        }
+        else if (Model.CreateAccount == true)
+        {
+            <form asp-controller="Editor" asp-action="Index">
+                <div class="input-group mb-3">
+                    <input class="form-control mr-sm-2" type="text" name="Quiz.AppUser.UserName" value="" placeholder="Username" />
+                </div>
+                <div class="input-group mb-3">
+                    <input class="form-control mr-sm-2" type="password" name="Password" value="" placeholder="Password" />
+                </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        }
+        else
+        {
+            <form asp-controller="Editor" asp-action="Index">
+                <div class="input-group mb-3">
+                    <input class="form-control mr-sm-2" type="text" name="Quiz.AppUser.UserName" value="" placeholder="Username" />
+                </div>
+                <div class="input-group mb-3">
+                    <input class="form-control mr-sm-2" type="password" name="Password" value="" placeholder="Password" />
+                </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="link-primary" type="submit" name="CreateAccount" value="true">Create an account</button>
+            </form>
+        }
+    </div>
+</article>

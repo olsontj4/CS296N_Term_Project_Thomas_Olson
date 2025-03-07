@@ -1,0 +1,65 @@
+﻿@using QuizCreator.Models.ViewModels
+@model QuizVM
+@{
+    var title = Model.Quiz.Title;
+    ViewData["Title"] = title;
+}
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+</div>
+<article class="container">
+    <div class="bg-dark-subtle p-5">
+    @if(Model.Page == 0)  //First page in quiz.
+    {
+        <form asp-controller="Quiz" asp-action="QuizQuestion">
+            <h1>@Model.Quiz.Title</h1>
+            <h3>@Model.Quiz.Description</h3>
+            <input asp-for="@Model.Quiz.Id" hidden value="@Model.Quiz.Id"/>
+            <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next question -></button>
+        </form>
+    }
+    else if(Model.Page > Model.Quiz.Questions.Count)  //End results.
+    {
+        <div>
+            <h1>@Model.EndTitle</h1>
+            <h3>@Model.EndMessage</h3>
+            @if (Model.Quiz.EndResult.DisplayScore == true)
+            {
+                <h3 class="text-success">Score: @Model.Score</h3>
+            }
+            <a class="btn btn-primary" asp-controller="Quiz" asp-action="Index">Play More Quizzes!</a>
+        </div>
+    }
+    else  //Each question in quiz.
+    {
+        <form asp-controller="Quiz" asp-action="QuizQuestion">
+            <h1>@Model.Quiz.Questions[Model.Page - 1].Q</h1>
+            @{
+                int numAnswers = 0;
+                if (Model.UserA != null)
+                {
+                    numAnswers = Model.UserA.Count();
+                }
+                int i = 0;
+                foreach (var a in @Model.AnswersInView)
+                {
+                    <input class="form-check-input" asp-for="@Model.AnswerInput" name="AnswerInput" type="radio" value="@a" required>
+                    <label class="form-check-label" asp-for="@Model.AnswerInput">@a</label>
+                    <br />
+                }
+                foreach(var a in Model.UserA)
+                {
+                    if (i < numAnswers)  //This is just to save answers between pages.
+                    {
+                        <input asp-for="@Model.UserA[i]" hidden value="@Model.UserA[i]" />
+                    }
+                    i++;
+                }
+            }
+            <input asp-for="@Model.Quiz.Id" hidden value="@Model.Quiz.Id" />
+            <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="@(Model.Page + 1)">Next question -></button>
+        </form>
+    }
+    </div>
+</article>
