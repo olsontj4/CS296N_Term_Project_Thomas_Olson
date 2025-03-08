@@ -47,6 +47,7 @@ internal class Program
         {
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             await SeedData.SeedAsync(context, scope.ServiceProvider);
+            await SeedRoles.SeedAsync(scope.ServiceProvider);
         }
 
         app.Run();

@@ -7,8 +7,8 @@ namespace QuizCreator.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<AppUser> _userManager;
-        private SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr)
         {
             _userManager = userMngr;
@@ -24,8 +24,11 @@ namespace QuizCreator.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AppUser { UserName = model.Username };
-                user.SignUpDate = DateTime.Now;
+                var user = new AppUser
+                {
+                    UserName = model.Username,
+                    SignUpDate = DateTime.Now
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
