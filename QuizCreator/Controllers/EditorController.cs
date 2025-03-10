@@ -18,7 +18,7 @@ namespace QuizCreator.Controllers
             var searchVM = new SearchVM();
             return View(searchVM);
         }
-        public IActionResult Index(SearchVM searchVM)
+        public async Task<IActionResult> Index(SearchVM searchVM)
         {
             if (searchVM.CreateAccount == true)
             {
@@ -26,7 +26,7 @@ namespace QuizCreator.Controllers
             }
 
             searchVM.Password = null;
-            var quizzes = repo.GetAllQuizzes().Where(q => q.IsComplete == true).ToList();
+            var quizzes = await repo.GetAllQuizzesAsync();
             searchVM.Quizzes = quizzes;
             return View(searchVM);
         }

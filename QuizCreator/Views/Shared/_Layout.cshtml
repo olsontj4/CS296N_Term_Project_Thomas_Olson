@@ -50,7 +50,7 @@
                             <li class="nav-item">
                                 <form method="post" asp-action="Logout" asp-controller="Account">
                                     <input type="submit" value="Log Out" class="btn btn-outline-dark" />
-                                    <span class="text-dark">@User.Identity.Name</span>
+                                    <span class="text-dark">@User.Identity?.Name</span>
                                 </form>
                             </li>
                         }

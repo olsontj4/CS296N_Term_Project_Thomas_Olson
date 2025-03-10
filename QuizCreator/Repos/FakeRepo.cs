@@ -7,12 +7,15 @@ namespace QuizCreator.Repos
     public class FakeRepo : IRepo
     {
         private List<Quiz> quizzes = new List<Quiz>();
-        public List<Quiz> GetAllQuizzes()
+        public async Task<List<Quiz>> GetAllQuizzesAsync()
         {
             throw new NotImplementedException();
         }
-
-        public Quiz GetQuizById(int id)
+        public Task<List<Quiz>> FilterAllQuizzesAsync(string search)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<Quiz> GetQuizByIdAsync(int id)
         {
             AppUser user2 = new AppUser { UserName = "Than" };
             return new Quiz()
@@ -118,7 +121,7 @@ namespace QuizCreator.Repos
             };
         }
 
-        public int StoreQuiz(Quiz model)
+        public async Task<int> StoreQuizAsync(Quiz model)
         {
             throw new NotImplementedException();
         }

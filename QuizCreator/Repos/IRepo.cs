@@ -4,8 +4,9 @@ namespace QuizCreator.Repos
 {
     public interface IRepo
     {
-        public List<Quiz> GetAllQuizzes();  // Returns all Quiz objects
-        public Quiz GetQuizById(int id); // Returns a model object
-        public int StoreQuiz(Quiz model);  // Saves a model object to the db
+        public Task<List<Quiz>> GetAllQuizzesAsync();// Returns all Quiz objects
+        public Task<List<Quiz>> FilterAllQuizzesAsync(string search);//Search for specific quizzes.
+        public Task<Quiz> GetQuizByIdAsync(int id);// Returns a model object
+        public Task<int> StoreQuizAsync(Quiz model);// Saves a model object to the db
     }
 }

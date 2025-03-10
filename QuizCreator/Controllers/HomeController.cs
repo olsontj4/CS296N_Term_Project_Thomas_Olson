@@ -15,11 +15,11 @@ namespace QuizCreator.Controllers
             repo = r;
             _logger = logger;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var quizzes = new List<Quiz>
             {
-                repo.GetQuizById(6)
+                await repo.GetQuizByIdAsync(6)
             };
             return View(quizzes);
         }

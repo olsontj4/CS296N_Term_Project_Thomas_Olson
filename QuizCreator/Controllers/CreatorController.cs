@@ -106,7 +106,7 @@ namespace QuizCreator.Controllers
             }
             if (creatorVM.Quiz.EndResult != null && ModelState.IsValid)  //Success condition.
             {
-                repo.StoreQuiz(creatorVM.Quiz);
+                repo.StoreQuizAsync(creatorVM.Quiz);
                 return RedirectToAction("Index", "Quiz");
             }
             else  //Failure condition.

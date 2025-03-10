@@ -8,16 +8,18 @@ namespace QuizTests
     public class QuizTests
     {
         private readonly IRepo repo = new FakeRepo();
-        QuizController controller;
+        private readonly QuizController controller;
         public QuizTests()
         {
             controller = new QuizController(repo);
         }
         [Fact]
-        public void CheckAnswers()
+        public async Task CheckAnswersAsync()
         {
-            QuizVM quizVM = new QuizVM();
-            quizVM.Quiz = repo.GetQuizById(1);
+            QuizVM quizVM = new()
+            {
+                Quiz = await repo.GetQuizByIdAsync(1)
+            };
             quizVM.UserA.Add("Than.");
             quizVM.UserA.Add("I hate it.");
             quizVM.UserA.Add("Aubrey.");
