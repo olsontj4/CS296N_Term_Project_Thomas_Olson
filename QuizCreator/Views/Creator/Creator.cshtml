@@ -1,4 +1,6 @@
-﻿@using QuizCreator.Models.ViewModels
+﻿@using Microsoft.AspNetCore.Identity
+@using QuizCreator.Models.ViewModels
+@inject SignInManager<AppUser> signInManager;
 @*
     TODO: Use images in quizzes.
 *@
@@ -33,9 +35,6 @@
                 </select>
                 <span asp-validation-for="@Model.Quiz.Type" class="text-danger"></span>
 
-                <p class="form-label">Username:</p>
-                <input asp-for="@Model.Quiz.AppUser.UserName" class="form-control" name="Quiz.AppUser.UserName" type="text" value="" placeholder="Enter a username..." required />
-                <span asp-validation-for="@Model.Quiz.AppUser.UserName" class="text-danger"></span>
                 <br />
                 <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next question -></button>
             </form>
@@ -62,9 +61,6 @@
                 </select>
                 <span asp-validation-for="@Model.Quiz.Type" class="text-danger"></span>
 
-                <p class="form-label">Username:</p>
-                <input asp-for="@Model.Quiz.AppUser.UserName" class="form-control" name="Quiz.AppUser.UserName" type="text" value="@Model.Quiz.AppUser.UserName" placeholder="Enter a username..." required />
-                <span asp-validation-for="@Model.Quiz.AppUser.UserName" class="text-danger"></span>
                 <br />
                 <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next question -></button>
             </form>

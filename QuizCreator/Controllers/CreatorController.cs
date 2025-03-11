@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using QuizCreator.Models;
 using QuizCreator.Models.ViewModels;
@@ -10,8 +11,10 @@ namespace QuizCreator.Controllers
     public class CreatorController : Controller
     {
         private readonly IRepo repo;
-        public CreatorController(IRepo r)
+        private readonly UserManager<AppUser> userManager;
+        public CreatorController(IRepo r, UserManager<AppUser> userMngr)
         {
+            userManager = userMngr;
             repo = r;
         }
         public IActionResult Creator()
@@ -83,7 +86,7 @@ namespace QuizCreator.Controllers
                 return View("Creator", creatorVM);
             }
         }
-        public IActionResult CreatorPost(CreatorVM creatorVM)
+        public async Task<IActionResult> CreatorPost(CreatorVM creatorVM)
         {
             creatorVM.Page = 1;
             foreach (var q in creatorVM.Quiz.Questions)
@@ -104,9 +107,10 @@ namespace QuizCreator.Controllers
                 creatorVM.AddAnswer = false;
                 return View("Creator", creatorVM);
             }
+            creatorVM.Quiz.AppUser = await userManager.GetUserAsync(User);
             if (creatorVM.Quiz.EndResult != null && ModelState.IsValid)  //Success condition.
             {
-                repo.StoreQuizAsync(creatorVM.Quiz);
+                await repo.StoreQuizAsync(creatorVM.Quiz);
                 return RedirectToAction("Index", "Quiz");
             }
             else  //Failure condition.

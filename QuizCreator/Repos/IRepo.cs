@@ -1,4 +1,5 @@
 ﻿using QuizCreator.Models;
+using QuizCreator.Models.ViewModels;
 
 namespace QuizCreator.Repos
 {

@@ -46,6 +46,7 @@ namespace QuizCreator.Repos
         public async Task<Quiz> GetQuizByIdAsync(int id)
         {
             return await context.Quizzes
+                .Where(q => q.Id == id)
                 .Include(q => q.Questions)
                 .ThenInclude(q => q.A)
                 .Include(q => q.Questions)
@@ -55,7 +56,6 @@ namespace QuizCreator.Repos
                 .Include(q => q.EndResult)
                 .ThenInclude(q => q.EndMessages)
                 .Include(q => q.AppUser)
-                .Where(q => q.Id == id)
                 .SingleOrDefaultAsync();
         }
         public async Task<int> StoreQuizAsync(Quiz model)

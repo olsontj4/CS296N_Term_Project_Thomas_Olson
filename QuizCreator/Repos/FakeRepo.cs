@@ -120,7 +120,6 @@ namespace QuizCreator.Repos
                 }
             };
         }
-
         public async Task<int> StoreQuizAsync(Quiz model)
         {
             throw new NotImplementedException();
