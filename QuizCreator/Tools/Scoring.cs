@@ -11,7 +11,7 @@ namespace QuizCreator.Tools
             {
                 for (int j = 0; j < quizVM.Quiz.Questions[i].A.Count; j++)
                 {
-                    if (quizVM.UserA[i] == quizVM.Quiz.Questions[i].A[j].AString)
+                    if (quizVM.UserA[i] == quizVM.Quiz.Questions[i].A[j].Id)
                     {
                         aKey.Add((bool)quizVM.Quiz.Questions[i].AKey[j].AKeyBool);
                     }

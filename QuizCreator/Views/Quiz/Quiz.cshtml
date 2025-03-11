@@ -44,8 +44,8 @@
                 int i = 0;
                 foreach (var a in @Model.AnswersInView)
                 {
-                    <input class="form-check-input" asp-for="@Model.AnswerInput" name="AnswerInput" type="radio" value="@a" required>
-                    <label class="form-check-label" asp-for="@Model.AnswerInput">@a</label>
+                    <input class="form-check-input" asp-for="@Model.AnswerInput" name="AnswerInput" type="radio" value="@a.Id" required>
+                    <label class="form-check-label" asp-for="@Model.AnswerInput">@a.AString</label>
                     <br />
                 }
                 foreach(var a in Model.UserA)

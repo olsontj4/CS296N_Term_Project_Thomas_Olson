@@ -46,7 +46,7 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> QuizQuestionAsync([FromForm]QuizVM quizVM)  //Each question in quiz.
         {
-            if (quizVM.AnswerInput != null)
+            if (quizVM.AnswerInput != 0 && quizVM.AnswerInput != null)
             {
                 quizVM.UserA.Add(quizVM.AnswerInput);
             }
@@ -59,8 +59,7 @@ namespace QuizCreator.Controllers
             List<A> answers = quizVM.Quiz.Questions[quizVM.Page - 1].A;
             foreach (var a in answers)
             {
-
-                quizVM.AnswersInView.Add(a.AString);
+                quizVM.AnswersInView.Add(a);
             }
             return View("Quiz", quizVM);
         }
