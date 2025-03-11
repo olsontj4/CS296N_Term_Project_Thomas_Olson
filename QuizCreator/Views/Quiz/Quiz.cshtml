@@ -16,7 +16,7 @@
             <h1>@Model.Quiz.Title</h1>
             <h3>@Model.Quiz.Description</h3>
             <input asp-for="@Model.Quiz.Id" hidden value="@Model.Quiz.Id"/>
-            <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next question -></button>
+            <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Play Quiz -></button>
         </form>
     }
     else if(Model.Page > Model.Quiz.Questions.Count)  //End results.
@@ -58,7 +58,7 @@
                 }
             }
             <input asp-for="@Model.Quiz.Id" hidden value="@Model.Quiz.Id" />
-            <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="@(Model.Page + 1)">Next question -></button>
+            <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="@(Model.Page + 1)">Next Question -></button>
         </form>
     }
     </div>

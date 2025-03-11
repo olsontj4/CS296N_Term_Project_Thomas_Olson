@@ -11,7 +11,7 @@ namespace QuizCreator.Data
             if (!(context.Quizzes.Any() || context.Users.Any())) // this is to prevent adding duplicate data
             {
                 const string PASSWORD = "Secret!123";
-                List<string> userNames = new() { "Thomasj041", "Than", "Logan", "ChatGPT", "Dylan", "Thomas Jefferson", "Jonathon Math", "ProfBird", "max", "Pikachew3" };
+                List<string> userNames = new() { "Thomasj041", "Than", "Logan", "ChatGPT", "Dylan", "Thomas_Jefferson", "Jonathon_Math", "ProfBird", "max", "Pikachew3" };
                 var appUsers = new List<AppUser>();
                 for (var i = 0; i < userNames.Count; i++)
                 {

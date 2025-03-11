@@ -36,7 +36,7 @@
                 <span asp-validation-for="@Model.Quiz.Type" class="text-danger"></span>
 
                 <br />
-                <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next question -></button>
+                <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next Question -></button>
             </form>
         }
         else if (Model.Page == 0)
@@ -62,7 +62,7 @@
                 <span asp-validation-for="@Model.Quiz.Type" class="text-danger"></span>
 
                 <br />
-                <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next question -></button>
+                <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next Question -></button>
             </form>
         }
         else if (Model.Quiz.IsComplete == true)
@@ -102,13 +102,13 @@
                     <span asp-validation-for="@Model.Quiz.EndResult.EndMessages[0].EndResultString" class="text-danger"></span>
                 }
                 <p>Order by highest score from top to bottom.</p>
-                <button name="AddAnswer" class="btn btn-outline-primary" type="submit" value="true">Add new end result</button>
+                <button name="AddAnswer" class="btn btn-outline-primary" type="submit" value="true">Add New End Result</button>
 
                 <div class="form-check">
                     <input input asp-for="@Model.Quiz.EndResult.DisplayScore" name="Quiz.EndResult.DisplayScore" class="form-check-input" type="checkbox" value="true" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">Display the user's score at the end?</label>
                 </div>
-                <button name="Page" class="btn btn-outline-success" type="submit" value="1">Post quiz</button>
+                <button name="Page" class="btn btn-outline-success" type="submit" value="1">Post Quiz</button>
 
                 <input name="Quiz.IsComplete" value="@Model.Quiz.IsComplete.ToString()" hidden />
                 <input name="Quiz.AppUser.UserName" value="@Model.Quiz.AppUser.UserName" hidden />
@@ -193,11 +193,11 @@
                     <p>@ViewBag.ErrorMessage</p>
                 }
                 <p>Check box for correct answer.</p>
-                <button name="AddAnswer" class="btn btn-outline-primary" type="submit" value="true">Add new answer</button>
+                <button name="AddAnswer" class="btn btn-outline-primary" type="submit" value="true">Add New Answer</button>
                 <br />
-                <button name="Quiz.IsComplete" class="btn btn-outline-dark" type="submit" value="true">Done adding questions</button>
+                <button name="Quiz.IsComplete" class="btn btn-outline-dark" type="submit" value="true">Done Adding Questions</button>
                 <input name="Page" value="@Model.Page" hidden />
-                <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next question -></button>
+                <button name="Page" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next Question -></button>
                 <input name="Quiz.AppUser.UserName" value="@Model.Quiz.AppUser.UserName" hidden />
                 <input name="Quiz.Title" value="@Model.Quiz.Title" hidden />
                 <input name="Quiz.Description" value="@Model.Quiz.Description" hidden />

@@ -16,8 +16,7 @@ namespace QuizCreator.Models
         public string Type { get; set; }
         public List<Question>? Questions { get; set; } = new();
         public EndResult? EndResult { get; set; }
-        [Required]
-        public AppUser? AppUser { get; set; } = new();
+        public AppUser? AppUser { get; set; }
         public DateTime? Date { get; set; }
         public bool IsComplete { get; set; }
     }

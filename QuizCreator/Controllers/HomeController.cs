@@ -17,10 +17,19 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var quizzes = new List<Quiz>
+            var featured = new List<int>()
             {
-                await repo.GetQuizByIdAsync(6)
+                6
             };
+            var quizzes = new List<Quiz>();
+            for (int i = 0; i < featured.Count; i++)
+            {
+                var quiz = await repo.GetQuizByIdAsync(featured[i]);
+                if (quiz != null)
+                {
+                    quizzes.Add(quiz);
+                }
+            }
             return View(quizzes);
         }
         public IActionResult Privacy()
