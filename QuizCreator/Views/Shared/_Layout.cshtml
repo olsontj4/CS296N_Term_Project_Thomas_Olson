@@ -46,12 +46,22 @@
                                     </a>
                                 </li>
                             }
+                            //Quiz editor for logged-in user.
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Editor" asp-action="Index">
+                                    <span class="fas fa-pen"></span>&nbsp;Quiz Editor
+                                </a>
+                            </li>
                             // signed-in user - Log Out button and username
                             <li class="nav-item">
-                                <form method="post" asp-action="Logout" asp-controller="Account">
-                                    <input type="submit" value="Log Out" class="btn btn-outline-dark" />
-                                    <span class="text-dark">@User.Identity?.Name</span>
-                                </form>
+                                <a class="nav-link text-dark" asp-action="Logout" asp-controller="Account">
+                                    <span class="text-dark"></span>Log Out
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark">
+                                    <span class="fas fa-user"></span>&nbsp;@User.Identity?.Name
+                                </a>
                             </li>
                         }
                         else

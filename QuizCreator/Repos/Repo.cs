@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizCreator.Data;
 using QuizCreator.Models;
-using QuizCreator.Models.ViewModels;
 
 namespace QuizCreator.Repos
 {
@@ -64,6 +63,16 @@ namespace QuizCreator.Repos
             context.Quizzes.Add(model);
             return await context.SaveChangesAsync();
             // returns a positive value if succussful
+        }
+        public async Task<int> UpdateQuizAsync(Quiz model)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<int> DeleteQuizAsync(int id)
+        {
+            var model = await GetQuizByIdAsync(id);
+            context.Quizzes.Remove(model);
+            return context.SaveChanges();
         }
     }
 }

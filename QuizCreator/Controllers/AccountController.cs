@@ -72,7 +72,6 @@ namespace QuizCreator.Controllers
             ModelState.AddModelError("", "Invalid username/password.");
             return View(model);
         }
-        [HttpPost]
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();

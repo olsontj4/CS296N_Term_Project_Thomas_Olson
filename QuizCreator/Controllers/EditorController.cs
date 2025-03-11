@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QuizCreator.Models;
 using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
 
@@ -20,15 +21,19 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> Index(SearchVM searchVM)
         {
-            if (searchVM.CreateAccount == true)
+            if (searchVM.Search != null)
             {
-                return View(searchVM);
+                List<Quiz> quizzes = await repo.FilterAllQuizzesAsync(searchVM.Search);
+                searchVM.Quizzes = quizzes;
+                return View("Index", searchVM);
             }
-
-            searchVM.Password = null;
-            var quizzes = await repo.GetAllQuizzesAsync();
-            searchVM.Quizzes = quizzes;
-            return View(searchVM);
+            else
+            {
+                var quizzes = await repo.GetAllQuizzesAsync();
+                searchVM = new SearchVM();
+                searchVM.Quizzes = quizzes;
+                return View("Index", searchVM);
+            }
         }
     }
 }

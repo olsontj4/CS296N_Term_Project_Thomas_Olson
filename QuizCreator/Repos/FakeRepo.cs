@@ -124,5 +124,13 @@ namespace QuizCreator.Repos
         {
             throw new NotImplementedException();
         }
+        public async Task<int> UpdateQuizAsync(Quiz model)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<int> DeleteQuizAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

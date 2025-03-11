@@ -1,5 +1,4 @@
 ﻿using QuizCreator.Models;
-using QuizCreator.Models.ViewModels;
 
 namespace QuizCreator.Repos
 {
@@ -9,5 +8,7 @@ namespace QuizCreator.Repos
         public Task<List<Quiz>> FilterAllQuizzesAsync(string search);//Search for specific quizzes.
         public Task<Quiz> GetQuizByIdAsync(int id);// Returns a model object
         public Task<int> StoreQuizAsync(Quiz model);// Saves a model object to the db
+        public Task<int> UpdateQuizAsync(Quiz model);
+        public Task<int> DeleteQuizAsync(int id);
     }
 }
