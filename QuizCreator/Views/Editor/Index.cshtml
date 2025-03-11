@@ -1,6 +1,6 @@
 ﻿@using QuizCreator.Models.ViewModels
 @{
-    ViewData["Title"] = "Edit a Quiz";
+    ViewData["Title"] = "Your Quizzes";
 }
 @model SearchVM
 <div class="text-center">
@@ -17,14 +17,14 @@
 </div>
 <article class="container-fluid" style="min-height: 200px;">
     <div class="row h-100">
-        @if (Model.Quizzes.Count != 0)
+        @if (Model.Quizzes?.Count != 0 && Model.Quizzes != null)
         {
             foreach (Quiz quiz in Model.Quizzes)
             {
                 <div class="card bg-dark-subtle col-lg-3 col-md-4 col-sm-6 col-12 h-100 mb-3 text-center">
                     <h3>@quiz.Title</h3>
                     <p>@quiz.Description</p>
-                    <p class="text-start float-start">Author: @quiz.AppUser.UserName &nbsp;</p>
+                    <p class="text-start float-start">Author: @quiz.AppUser?.UserName &nbsp;</p>
                     <p class="text-sm-start text-start float-start float-sm-end">Posted on: @quiz.Date.Value.ToShortDateString()</p>
                     <a asp-controller="Quiz" asp-action="Quiz" asp-route-id="@quiz.Id" type="submit" class="stretched-link"></a>
                 </div>

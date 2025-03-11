@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using QuizCreator.Models;
 using QuizCreator.Models.ViewModels;
@@ -10,15 +11,21 @@ namespace QuizCreator.Controllers
     public class EditorController : Controller
     {
         private readonly IRepo repo;
-        public EditorController(IRepo r)
+        private readonly UserManager<AppUser> userManager;
+        public EditorController(IRepo r, UserManager<AppUser> userMngr)
         {
+            userManager = userMngr;
             repo = r;
         }
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             var searchVM = new SearchVM();
+            var appUser = await userManager.GetUserAsync(User);
+            searchVM.Quizzes = await repo.GetUserQuizzesAsync(appUser.Id);
             return View(searchVM);
         }
+        [HttpPost]
         public async Task<IActionResult> Index(SearchVM searchVM)
         {
             if (searchVM.Search != null)

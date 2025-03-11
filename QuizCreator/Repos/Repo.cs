@@ -26,6 +26,21 @@ namespace QuizCreator.Repos
                 .Include(q => q.AppUser)
                 .ToListAsync();
         }
+        public async Task<List<Quiz>> GetUserQuizzesAsync(string id)
+        {
+            return await context.Quizzes
+                .Where(q => q.AppUser.Id == id)
+                .Include(q => q.Questions)
+                .ThenInclude(q => q.A)
+                .Include(q => q.Questions)
+                .ThenInclude(q => q.AKey)
+                .Include(q => q.EndResult)
+                .ThenInclude(q => q.EndTitles)
+                .Include(q => q.EndResult)
+                .ThenInclude(q => q.EndMessages)
+                .Include(q => q.AppUser)
+                .ToListAsync();
+        }
         public async Task<List<Quiz>> FilterAllQuizzesAsync(string search)
         {
             return await context.Quizzes
