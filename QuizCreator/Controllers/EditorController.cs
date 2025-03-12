@@ -42,5 +42,16 @@ namespace QuizCreator.Controllers
                 return View("Index", searchVM);
             }
         }
+        public async Task<IActionResult> DeleteQuiz(int quizId)
+        {
+            if (await repo.DeleteQuizAsync(quizId) > 0)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Quiz", "Quiz", quizId);
+            }
+        }
     }
 }
