@@ -9,8 +9,8 @@ namespace QuizCreator.Controllers
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private UserManager<AppUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
         public UserController(UserManager<AppUser> userMngr, RoleManager<IdentityRole> roleMngr)
         {
             _userManager = userMngr;
