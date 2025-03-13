@@ -12,9 +12,14 @@
     <div class="bg-dark-subtle p-5">
     @if(Model.Page == 0)  //First page in quiz.
     {
+        if (User.Identity?.Name == Model.Quiz.AppUser?.UserName)
+        {
+            <a class="text-primary text-start float-start col-12 col-sm-6" asp-controller="Creator" asp-action="CreatorStart" asp-route-quiz.id="@Model.Quiz.Id">Edit Quiz</a>
+        }
         if (User.Identity?.Name == Model.Quiz.AppUser?.UserName || User.IsInRole("Admin"))
         {
-            <a class="text-danger text-sm-start text-start float-start float-sm-end" asp-controller="Editor" asp-action="DeleteQuiz" asp-route-quizId="@Model.Quiz.Id">Delete Quiz</a>
+                <a class="text-danger text-sm-end float-sm-end col-12 col-sm-6" asp-controller="Editor" asp-action="DeleteQuiz" asp-route-quizId="@Model.Quiz.Id">Delete Quiz</a>
+            <br />
         }
         <form asp-controller="Quiz" asp-action="QuizQuestion">
             <h1>@Model.Quiz.Title</h1>

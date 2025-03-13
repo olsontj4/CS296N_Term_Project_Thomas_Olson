@@ -4,6 +4,7 @@
     {
         public Quiz? Quiz { get; set; } = new();
         public int Page { get; set; }
+        public int NextPage { get; set; }
         public bool AddAnswer { get; set; } = false;
         public bool DeleteAnswer { get; set; } = false;
     }

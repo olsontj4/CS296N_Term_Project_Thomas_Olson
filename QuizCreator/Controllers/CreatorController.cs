@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuizCreator.Models;
 using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
+using System.Threading.Tasks;
 
 namespace QuizCreator.Controllers
 {
@@ -20,16 +21,35 @@ namespace QuizCreator.Controllers
         public IActionResult Creator()
         {
             var creatorVM = new CreatorVM();
-            creatorVM.Page = 0;
             return View(creatorVM);
         }
-        public IActionResult CreatorStart(CreatorVM creatorVM)
+        public async Task<IActionResult> CreatorStart(CreatorVM creatorVM)
         {
+            if (creatorVM.Quiz?.Id > 0)
+            {
+                creatorVM.Quiz = await repo.GetQuizByIdAsync(creatorVM.Quiz.Id);
+                creatorVM.Quiz.IsComplete = false;
+                return View("Creator", creatorVM);
+            }
             if (creatorVM.Quiz != null && ModelState.IsValid )  //Success condition.
             {
+                if (creatorVM.NextPage > creatorVM.Quiz.Questions.Count)  //New question.
+                {
+                    creatorVM.Quiz.Questions.Add(new());
+                    creatorVM.Quiz.Questions[creatorVM.Page].A.Add(new());
+                    creatorVM.Quiz.Questions[creatorVM.Page].AKey.Add(new AKey() { AKeyBool = false });
+                    creatorVM.Page = creatorVM.Quiz.Questions.Count;
+                    return View("Creator", creatorVM);
+                }
+                else
+                {
+                    creatorVM.Page = creatorVM.NextPage;
+                    return View("Creator", creatorVM);
+                }
                 creatorVM.Quiz.Questions.Add(new());
                 creatorVM.Quiz.Questions[0].A.Add(new());
                 creatorVM.Quiz.Questions[0].AKey.Add(new AKey() { AKeyBool = false });
+                creatorVM.Page = 1;
                 return View("Creator", creatorVM);
             }
             else  //Failure condition.
@@ -48,10 +68,6 @@ namespace QuizCreator.Controllers
         }
         public IActionResult CreatorQuestion(CreatorVM creatorVM)
         {
-            if (creatorVM.Page == 0 && creatorVM.Quiz.IsComplete == true)
-            {
-                creatorVM.Page = 1;
-            }
             if(creatorVM.AddAnswer == true)  //Add answer button.
             {
                 creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Add(new());
@@ -66,11 +82,29 @@ namespace QuizCreator.Controllers
                 {
                     return View("Creator", creatorVM);
                 }
-                creatorVM.Quiz.Questions.Add(new());
-                creatorVM.Quiz.Questions[creatorVM.Page].A.Add(new());
-                creatorVM.Quiz.Questions[creatorVM.Page].AKey.Add(new AKey() { AKeyBool = false });
-                creatorVM.Page = creatorVM.Quiz.Questions.Count;
-                return View("Creator", creatorVM);
+                else
+                {
+                    if (creatorVM.NextPage != creatorVM.Page)  //Different question.
+                    {
+                        if (creatorVM.NextPage > creatorVM.Quiz.Questions.Count)  //New question.
+                        {
+                            creatorVM.Quiz.Questions.Add(new());
+                            creatorVM.Quiz.Questions[creatorVM.Page].A.Add(new());
+                            creatorVM.Quiz.Questions[creatorVM.Page].AKey.Add(new AKey() { AKeyBool = false });
+                            creatorVM.Page = creatorVM.Quiz.Questions.Count;
+                            return View("Creator", creatorVM);
+                        }
+                        else
+                        {
+                            creatorVM.Page = creatorVM.NextPage;
+                            return View("Creator", creatorVM);
+                        }
+                    }
+                    else
+                    {
+                        return View("Creator", creatorVM);
+                    }
+                }
             }
             else  //Failure condition.
             {
