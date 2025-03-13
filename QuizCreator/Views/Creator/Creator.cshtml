@@ -40,9 +40,9 @@
                 <button name="NextPage" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next Question &#8722;&#62;</button>
 
                 <input name="Quiz.EndResult.DisplayScore" value="@Model.Quiz.EndResult?.DisplayScore.ToString()" hidden>
-                @if (Model.Quiz?.Id > 0)
+                @if (Model.Quiz?.QuizId > 0)
                 {
-                    <input name="Quiz.Id" value="@Model.Quiz.Id" hidden />
+                    <input name="Quiz.QuizId" value="@Model.Quiz.QuizId" hidden />
                 }
                 <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />
                 <input name="Quiz.Description" value="@Model.Quiz?.Description" hidden />
@@ -117,9 +117,9 @@
                 <button name="NextPage" class="btn btn-outline-dark" type="submit" value="@(Model.Quiz.Questions?.Count)">&#60;&#8722; Previous Question</button>
 
                 <input name="Page" value="@Model.Page" hidden />
-                @if (Model.Quiz?.Id > 0)
+                @if (Model.Quiz?.QuizId > 0)
                 {
-                    <input name="Quiz.Id" value="@Model.Quiz.Id" hidden />
+                    <input name="Quiz.QuizId" value="@Model.Quiz.QuizId" hidden />
                 }
                 <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
                 <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />
@@ -178,9 +178,9 @@
 
                 <input name="Page" value="@Model.Page" hidden />
                 <input name="Quiz.EndResult.DisplayScore" value="@Model.Quiz.EndResult?.DisplayScore.ToString()" hidden>
-                @if (Model.Quiz?.Id > 0)
+                @if (Model.Quiz?.QuizId > 0)
                 {
-                    <input name="Quiz.Id" value="@Model.Quiz.Id" hidden />
+                    <input name="Quiz.QuizId" value="@Model.Quiz.QuizId" hidden />
                 }
                 <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
                 <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />

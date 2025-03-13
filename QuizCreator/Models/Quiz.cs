@@ -4,7 +4,7 @@ namespace QuizCreator.Models
 {
     public class Quiz
     {
-        public int Id { get; set; }
+        public int QuizId { get; set; }
         public string? ImageUrl { get; set; }
         [Required(AllowEmptyStrings = false)]
         [StringLength(100)]

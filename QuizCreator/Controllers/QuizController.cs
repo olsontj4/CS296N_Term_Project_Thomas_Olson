@@ -50,7 +50,7 @@ namespace QuizCreator.Controllers
             {
                 quizVM.UserA.Add(quizVM.AnswerInput);
             }
-            quizVM.Quiz = await repo.GetQuizByIdAsync(quizVM.Quiz.Id);
+            quizVM.Quiz = await repo.GetQuizByIdAsync(quizVM.Quiz.QuizId);
             if (quizVM.Page > quizVM.Quiz.Questions.Count)  //End results.
             {
                 quizVM = Scoring.CheckAll(quizVM);

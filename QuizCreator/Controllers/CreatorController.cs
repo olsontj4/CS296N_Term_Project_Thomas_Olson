@@ -24,9 +24,9 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> CreatorStart(CreatorVM creatorVM)
         {
-            if (creatorVM.Quiz?.Id > 0 && creatorVM.NextPage == 0)
+            if (creatorVM.Quiz?.QuizId > 0 && creatorVM.NextPage == 0)
             {
-                creatorVM.Quiz = await repo.GetQuizByIdAsync(creatorVM.Quiz.Id);
+                creatorVM.Quiz = await repo.GetQuizByIdAsync(creatorVM.Quiz.QuizId);
                 creatorVM.Quiz.IsComplete = false;
                 return View("Creator", creatorVM);
             }
@@ -147,11 +147,11 @@ namespace QuizCreator.Controllers
             creatorVM.Quiz.AppUser = await userManager.GetUserAsync(User);
             if (creatorVM.Quiz.EndResult != null && ModelState.IsValid)  //Success condition.
             {
-                if (creatorVM.Quiz.Id > 0)//Check whether quiz is new or being updated.
+                if (creatorVM.Quiz.QuizId > 0)//Check whether quiz is new or being updated.
                 {
                     if (creatorVM.Quiz.AppUser.UserName == User.Identity?.Name)//Check if user signed in is still the original creator.
                     {
-                        if (await repo.DeleteQuizAsync(creatorVM.Quiz.Id) > 0)//Check if delete of original quiz was successful.
+                        if (await repo.DeleteQuizAsync(creatorVM.Quiz.QuizId) > 0)//Check if delete of original quiz was successful.
                         {
                             await repo.StoreQuizAsync(creatorVM.Quiz);//I was going to use my update method for the database, but it duplicated child classes in the quiz model.
                             return RedirectToAction("Index", "Quiz");

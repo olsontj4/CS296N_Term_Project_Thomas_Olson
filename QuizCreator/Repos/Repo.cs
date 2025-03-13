@@ -60,7 +60,7 @@ namespace QuizCreator.Repos
         public async Task<Quiz> GetQuizByIdAsync(int id)
         {
             return await context.Quizzes
-                .Where(q => q.Id == id)
+                .Where(q => q.QuizId == id)
                 .Include(q => q.Questions)
                 .ThenInclude(q => q.A)
                 .Include(q => q.Questions)

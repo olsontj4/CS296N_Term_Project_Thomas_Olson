@@ -25,7 +25,7 @@ namespace QuizCreator.Data
                 context.SaveChanges();  // Saving adds UserId to User objects
                 Quiz quiz1 = new Quiz()
                 {
-                    Id = 1,
+                    QuizId = 1,
                     Title = "Are you in the Kool Kids Klub?",
                     Description = "Take this quiz to figure out if you're a true Kool Kid!",
                     Type = "Trivia",
@@ -78,7 +78,7 @@ namespace QuizCreator.Data
                 };
                 Quiz quiz2 = new Quiz()
                 {
-                    Id = 2,
+                    QuizId = 2,
                     Title = "Are you Than?",
                     Description = "Take this quiz to figure out if you're a certified Than!",
                     Type = "Trivia",
@@ -179,7 +179,7 @@ namespace QuizCreator.Data
                 };
                 Quiz bestquiz = new Quiz()
                 {
-                    Id = 3,
+                    QuizId = 3,
                     Title = "What Disney Princess are you?",
                     Description = "What Pixar Princess are you?",
                     Type = "Trivia",
@@ -550,7 +550,7 @@ namespace QuizCreator.Data
                 };
                 Quiz quiz4 = new Quiz()
                 {
-                    Id = 4,
+                    QuizId = 4,
                     Title = "Are You a Coding Master?",
                     Description = "Take this quiz to see how well you know coding concepts and practices!",
                     Type = "Trivia",
@@ -687,7 +687,7 @@ namespace QuizCreator.Data
                 };
                 Quiz quiz5 = new Quiz()
                 {
-                    Id = 5,
+                    QuizId = 5,
                     Title = "Are you procrastinating right now?",
                     Description = "Do you really have time for this?",
                     Type = "Trivia",
@@ -829,7 +829,7 @@ namespace QuizCreator.Data
                 };
                 Quiz quiz6 = new Quiz()
                 {
-                    Id = 6,
+                    QuizId = 6,
                     Title = "Insect Trivia",
                     Description = "Are you a true insect expert? Take this quiz to find out!",
                     Type = "Trivia",
@@ -999,7 +999,7 @@ namespace QuizCreator.Data
                 };
                 Quiz quiz7 = new Quiz()
                 {
-                    Id = 7,
+                    QuizId = 7,
                     Title = "Does Thomas deserve an A?",
                     Description = "Or maybe even an A+... 👀",
                     Type = "Trivia",
@@ -1096,15 +1096,15 @@ namespace QuizCreator.Data
             },
             AKey = new()
             {
-                new() { Id = 178, AKeyBool = true },
-                new() { Id = 179, AKeyBool = true },
-                new() { Id = 180, AKeyBool = false },
-                new() { Id = 181, AKeyBool = false }
+                new() { AKeyId = 178, AKeyBool = true },
+                new() { AKeyId = 179, AKeyBool = true },
+                new() { AKeyId = 180, AKeyBool = false },
+                new() { AKeyId = 181, AKeyBool = false }
             }
         },
         new Question()
         {
-            Id = 55,
+            QuestionId = 55,
             ImageUrl = null,
             Q = "Does the quiz creation part of the site work?",
             A = new()

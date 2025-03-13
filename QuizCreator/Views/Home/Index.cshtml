@@ -18,7 +18,7 @@
                     <p>@quiz.Description</p>
                     <p class="text-start float-start">Author: @quiz.AppUser.UserName &nbsp;</p>
                     <p class="text-sm-start text-start float-start float-sm-end">Posted on: @quiz.Date.Value.ToShortDateString()</p>
-                    <a asp-controller="Quiz" asp-action="Quiz" asp-route-id="@quiz.Id" type="submit" class="stretched-link"></a>
+                    <a asp-controller="Quiz" asp-action="Quiz" asp-route-id="@quiz.QuizId" type="submit" class="stretched-link"></a>
                 </div>
             }
         }

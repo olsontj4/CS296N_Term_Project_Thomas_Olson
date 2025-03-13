@@ -4,7 +4,7 @@ namespace QuizCreator.Models
 {
     public class Question
     {
-        public int Id { get; set; }
+        public int QuestionId { get; set; }
         public string? ImageUrl { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string Q {  get; set; }
@@ -12,21 +12,20 @@ namespace QuizCreator.Models
         public List<A> A { get; set; } = new();
         [Required]
         public List<AKey>? AKey { get; set; } = new();
+        public int QuizId { get; set; }
     }
     public class A
     {
-        public int Id { get; set; }
+        public int AId { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string AString { get; set; }
+        public int QuestionId { get; set; }
     }
     public class AKey
     {
-        public int Id { get; set; }
+        public int AKeyId { get; set; }
         [Required]
         public bool AKeyBool { get; set; } = false;
-        /*{
-            get { return aKeyBool; }
-            set { aKeyBool = value ?? false; }
-        }*/
+        public int QuestionId { get; set; }
     }
 }

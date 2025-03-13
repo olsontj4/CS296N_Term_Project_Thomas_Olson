@@ -24,7 +24,7 @@ namespace QuizCreator.Repos
             AppUser user2 = new AppUser { UserName = "Than" };
             return new Quiz()
             {
-                Id = 2,
+                QuizId = 2,
                 Title = "Are you Than?",
                 Description = "Take this quiz to figure out if you're a certified Than!",
                 Type = "Trivia",
