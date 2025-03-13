@@ -81,7 +81,9 @@ namespace QuizCreator.Repos
         }
         public async Task<int> UpdateQuizAsync(Quiz model)
         {
-            throw new NotImplementedException();
+            model.Date = DateTime.Now;
+            context.Quizzes.Update(model);
+            return await context.SaveChangesAsync();
         }
         public async Task<int> DeleteQuizAsync(int id)
         {

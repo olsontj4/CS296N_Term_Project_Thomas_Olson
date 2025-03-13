@@ -17,7 +17,7 @@
         @if (Model.Page == 0)
         {
             <form asp-controller="Creator" asp-action="CreatorStart">
-                <p class="text-danger">@ViewBag.ErrorMessage</p>
+                <div class="text-danger" asp-validation-summary="All"></div>
                 <!--p class="form-label">Image:</p>
                 <input class="form-control" type="image" value="" /-->
                 <p class="form-label">Title:</p>
@@ -38,104 +38,101 @@
 
                 <br />
                 <button name="NextPage" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="1">Next Question &#8722;&#62;</button>
+
+                <input name="Quiz.EndResult.DisplayScore" value="@Model.Quiz.EndResult?.DisplayScore.ToString()" hidden>
                 @if (Model.Quiz?.Id > 0)
                 {
                     <input name="Quiz.Id" value="@Model.Quiz.Id" hidden />
                 }
-            </form>
-        }
-        else if (Model.Quiz.IsComplete == true)
-        {
-            <form asp-controller="Creator" asp-action="CreatorPost">
-                <p class="text-danger">@ViewBag.ErrorMessage</p>
-                <p class="form-label">End titles:</p>
-                @if (Model.Quiz.EndResult != null)
+                <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />
+                <input name="Quiz.Description" value="@Model.Quiz?.Description" hidden />
+                <input name="Quiz.Type" value="@Model.Quiz?.Type" hidden />
+                @for (var i = 0; i < Model.Quiz?.Questions?.Count; i++)
                 {
-                    for (var i = 0; i < Model.Quiz.EndResult.EndTitles.Count; i++)
+                    if (Model.Page != (i + 1))
                     {
-                        <div class="input-group mb-3">
-                            <input asp-for="@Model.Quiz.EndResult.EndTitles[i].EndResultString" name="Quiz.EndResult.EndTitles[@i].EndResultString" class="form-control" type="text" value="@Model.Quiz.EndResult.EndTitles[i].EndResultString" placeholder="Enter your end result...">
-                        </div>
-                        <span asp-validation-for="@Model.Quiz.EndResult.EndTitles[i].EndResultString" class="text-danger"></span>
-                    }
-                    <p class="form-label">End messages:</p>
-                    for (var i = 0; i < Model.Quiz.EndResult.EndTitles.Count; i++)
-                    {
-                        <div class="input-group mb-3">
-                            <input asp-for="@Model.Quiz.EndResult.EndMessages[i].EndResultString" name="Quiz.EndResult.EndMessages[@i].EndResultString" class="form-control" type="text" value="@Model.Quiz.EndResult.EndMessages[i].EndResultString" placeholder="Enter your end result message...">
-                        </div>
-                        <span asp-validation-for="@Model.Quiz.EndResult.EndMessages[i].EndResultString" class="text-danger"></span>
+                        <input name="Quiz.Questions[@i]" value="@Model.Quiz.Questions[i]" hidden />
+                        <input name="Quiz.Questions[@i].Q" value="@Model.Quiz.Questions[i].Q" hidden />
+                        for (var j = 0; j < Model.Quiz.Questions[i].A.Count; j++)
+                        {
+                            <input name="Quiz.Questions[@(i)].A[@(j)].AString" value="@Model.Quiz.Questions[i].A[j].AString" hidden />
+                            <input name="Quiz.Questions[@i].AKey[@j].AKeyBool" value="@Model.Quiz.Questions[i].AKey[j].AKeyBool.ToString()" hidden />
+                        }
                     }
                 }
-                else
+                <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
+                <input name="Quiz.EndResult" value="@Model.Quiz?.EndResult" hidden />
+                <input name="Quiz.EndResult" value="@Model.Quiz?.EndResult?.DisplayScore" hidden />
+                @if (Model.Quiz?.EndResult?.EndTitles != null)
+                {
+                    @for (var i = 0; i < Model.Quiz?.EndResult?.EndTitles.Count; i++)
+                    {
+                        <input name="Quiz.EndResult.EndTitles[@i]" value="@Model.Quiz.EndResult.EndTitles[i]" hidden />
+                        <input name="Quiz.EndResult.EndTitles[@i].EndResultString" value="@Model.Quiz.EndResult.EndTitles[i].EndResultString" hidden />
+                    }
+                    @for (var i = 0; i < Model.Quiz?.EndResult?.EndMessages.Count; i++)
+                    {
+                        <input name="Quiz.EndResult.EndMessages[@i]" value="@Model.Quiz.EndResult.EndMessages[i]" hidden />
+                        <input name="Quiz.EndResult.EndMessages[@i].EndResultString" value="@Model.Quiz.EndResult.EndMessages[i].EndResultString" hidden />
+                    }
+                }
+            </form>
+        }
+        else if (Model.Quiz?.IsComplete == true)
+        {
+            <form asp-controller="Creator" asp-action="CreatorPost">
+                <div class="text-danger" asp-validation-summary="All"></div>
+                <p class="form-label">End titles:</p>
+                @for (var i = 0; i < Model.Quiz.EndResult?.EndTitles.Count; i++)
                 {
                     <div class="input-group mb-3">
-                        <input asp-for="@Model.Quiz.EndResult.EndTitles[0].EndResultString" name="Quiz.EndResult.EndTitles[0].EndResultString" class="form-control" type="text" value="" placeholder="Enter your end result...">
+                        <input asp-for="@Model.Quiz.EndResult.EndTitles[i].EndResultString" name="Quiz.EndResult.EndTitles[@i].EndResultString" class="form-control" type="text" value="@Model.Quiz.EndResult.EndTitles[i].EndResultString" placeholder="Enter your end result...">
                     </div>
-                    <span asp-validation-for="@Model.Quiz.EndResult.EndTitles[0].EndResultString" class="text-danger"></span>
-
-                    <p class="form-label">End messages:</p>
+                    <span asp-validation-for="@Model.Quiz.EndResult.EndTitles[i].EndResultString" class="text-danger"></span>
+                }
+                <p class="form-label">End messages:</p>
+                @for (var i = 0; i < Model.Quiz.EndResult?.EndTitles.Count; i++)
+                {
                     <div class="input-group mb-3">
-                        <input asp-for="@Model.Quiz.EndResult.EndMessages[0].EndResultString" name="Quiz.EndResult.EndMessages[0].EndResultString" class="form-control" type="text" value="" placeholder="Enter your end result message...">
+                        <input asp-for="@Model.Quiz.EndResult.EndMessages[i].EndResultString" name="Quiz.EndResult.EndMessages[@i].EndResultString" class="form-control" type="text" value="@Model.Quiz.EndResult.EndMessages[i].EndResultString" placeholder="Enter your end result message...">
                     </div>
-                    <span asp-validation-for="@Model.Quiz.EndResult.EndMessages[0].EndResultString" class="text-danger"></span>
+                    <span asp-validation-for="@Model.Quiz.EndResult.EndMessages[i].EndResultString" class="text-danger"></span>
                 }
                 <p>Order by highest score from top to bottom.</p>
                 <button name="AddAnswer" class="btn btn-outline-primary" type="submit" value="true">Add New End Result</button>
 
                 <div class="form-check">
-                    <input input asp-for="@Model.Quiz.EndResult.DisplayScore" name="Quiz.EndResult.DisplayScore" class="form-check-input" type="checkbox" value="true" id="flexCheckDefault">
+                    @if (Model.Quiz.EndResult?.DisplayScore == true)
+                    {
+                        <input input asp-for="@Model.Quiz.EndResult.DisplayScore" name="Quiz.EndResult.DisplayScore" class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" checked>
+                    }
+                    else
+                    {
+                        <input input asp-for="@Model.Quiz.EndResult.DisplayScore" name="Quiz.EndResult.DisplayScore" class="form-check-input" type="checkbox" value="true" id="flexCheckDefault">
+                    }
                     <label class="form-check-label" for="flexCheckDefault">Display the user's score at the end?</label>
                 </div>
-                <button name="NextPage" class="btn btn-outline-success" type="submit" value="@(Model.Quiz.Questions.Count + 1)">Post Quiz</button>
+                <button class="btn btn-outline-success" type="submit">Post Quiz</button>
                 <br />
-                <button name="NextPage" class="btn btn-outline-dark" type="submit" value="@(Model.Quiz.Questions.Count - 1)">&#60;&#8722; Previous Question</button>
+                <button name="NextPage" class="btn btn-outline-dark" type="submit" value="@(Model.Quiz.Questions?.Count)">&#60;&#8722; Previous Question</button>
 
-                <input name="Quiz.IsComplete" value="@Model.Quiz.IsComplete.ToString()" hidden />
-                <input name="Quiz.Title" value="@Model.Quiz.Title" hidden />
-                <input name="Quiz.Description" value="@Model.Quiz.Description" hidden />
-                <input name="Quiz.Type" value="@Model.Quiz.Type" hidden />
-                @if (Model.Quiz.Id > 0)
+                <input name="Page" value="@Model.Page" hidden />
+                @if (Model.Quiz?.Id > 0)
                 {
                     <input name="Quiz.Id" value="@Model.Quiz.Id" hidden />
                 }
-                @if (Model.Quiz.Questions != null)
+                <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
+                <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />
+                <input name="Quiz.Description" value="@Model.Quiz?.Description" hidden />
+                <input name="Quiz.Type" value="@Model.Quiz?.Type" hidden />
+                @for (var i = 0; i < Model.Quiz?.Questions?.Count; i++)
                 {
-                    for (var i = 0; i < Model.Quiz.Questions.Count; i++)
+                    <input name="Quiz.Questions[@i]" value="@Model.Quiz.Questions[i]" hidden />
+                    <input name="Quiz.Questions[@i].Q" value="@Model.Quiz.Questions[i].Q" hidden />
+                    for (var j = 0; j < Model.Quiz.Questions[i].A.Count; j++)
                     {
-                        <input name="Quiz.Questions[@i]" value="@Model.Quiz.Questions[i]" hidden />
-                        <input name="Quiz.Questions[@i].Q" value="@Model.Quiz.Questions[i].Q" hidden />
-                        @if (Model.Quiz.Questions[i].A != null)
-                        {
-                            for (var j = 0; j < Model.Quiz.Questions[i].A.Count; j++)
-                            {
-                                //<input name="Quiz.Questions[@(i)].A[@(j)]" value="@Model.Quiz.Questions[i].A[j]" hidden />
-                                <input name="Quiz.Questions[@(i)].A[@(j)].AString" value="@Model.Quiz.Questions[i].A[j].AString" hidden />
-                                //<input name="Quiz.Questions[@i].AKey[@j]" value="@Model.Quiz.Questions[i].AKey[j]" hidden />
-                                <input name="Quiz.Questions[@i].AKey[@j].AKeyBool" value="@Model.Quiz.Questions[i].AKey[j].AKeyBool.ToString()" hidden />
-                            }
-                        }
-                    }
-                }
-                @if (Model.Quiz.EndResult != null)
-                {
-                    <input name="Quiz.EndResult" value="@Model.Quiz.EndResult" hidden />
-                    <input name="Quiz.EndResult" value="@Model.Quiz.EndResult.DisplayScore" hidden />
-                    @if (Model.Quiz.EndResult.EndTitles != null)
-                    {
-                        for (var i = 0; i < Model.Quiz.EndResult.EndTitles.Count; i++)
-                        {
-                            <input name="Quiz.EndResult.EndTitles[@i]" value="@Model.Quiz.EndResult.EndTitles[i]" hidden />
-                            <input name="Quiz.EndResult.EndTitles[@i].EndResultString" value="@Model.Quiz.EndResult.EndTitles[i].EndResultString" hidden />
-                        }
-                    }
-                    @if (Model.Quiz.EndResult.EndMessages != null)
-                    {
-                        for (var i = 0; i < Model.Quiz.EndResult.EndMessages.Count; i++)
-                        {
-                            <input name="Quiz.EndResult.EndMessages[@i]" value="@Model.Quiz.EndResult.EndMessages[i]" hidden />
-                            <input name="Quiz.EndResult.EndMessages[@i].EndResultString" value="@Model.Quiz.EndResult.EndMessages[i].EndResultString" hidden />
-                        }
+                        <input name="Quiz.Questions[@(i)].A[@(j)].AString" value="@Model.Quiz.Questions[i].A[j].AString" hidden />
+                        <input name="Quiz.Questions[@i].AKey[@j].AKeyBool" value="@Model.Quiz.Questions[i].AKey[j].AKeyBool.ToString()" hidden />
                     }
                 }
             </form>
@@ -143,38 +140,22 @@
         else
         {
             <form asp-controller="Creator" asp-action="CreatorQuestion">
-                <p class="text-danger">@ViewBag.ErrorMessage</p>
+                <div class="text-danger" asp-validation-summary="All"></div>
                 <!--p class="form-label">Image:</p>
                 <input class="form-control" type="image" value="" /-->
-                @if (Model.Quiz.Questions != null)
-                {
-                    <p class="form-label">Question @(Model.Page) of @(Model.Quiz.Questions.Count):</p>
-                    <input asp-for="@Model.Quiz.Questions[Model.Page - 1].Q" class="form-control" name="Quiz.Questions[@(Model.Page - 1)].Q" type="text" value="@Model.Quiz.Questions[Model.Page - 1].Q" placeholder="Enter your question..."/>
-                    <span asp-validation-for="@Model.Quiz.Title" class="text-danger"></span>
-                }
-                else
-                {
-                    <p class="form-label">Question 1:</p>
-                    <input asp-for="@Model.Quiz.Questions[Model.Page - 1].Q" class="form-control" name="Quiz.Questions[@(Model.Page - 1)].Q" type="text" value="" placeholder="Enter your question..."/>
-                    <span asp-validation-for="@Model.Quiz.Title" class="text-danger"></span>
-                }
+                <p class="form-label">Question @(Model.Page) of @(Model.Quiz?.Questions?.Count):</p>
+                <input asp-for="@Model.Quiz.Questions[Model.Page - 1].Q" class="form-control" name="Quiz.Questions[@(Model.Page - 1)].Q" type="text" value="@Model.Quiz?.Questions?[Model.Page - 1].Q" placeholder="Enter your question..."/>
+                <span asp-validation-for="@Model.Quiz.Title" class="text-danger"></span>
 
                 <p class="form-label">Answers:</p>
-                @if (Model.Quiz.Questions != null)
+                @for (var i = 0; i < Model.Quiz?.Questions?[Model.Page - 1].A.Count; i++)
                 {
-                    for (var i = 0; i < Model.Quiz.Questions[Model.Page - 1].A.Count; i++)
-                    {
-                        <div class="input-group mb-3">
-                            <div class="input-group-text">
-                                <input asp-for="@Model.Quiz.Questions[Model.Page - 1].AKey[i].AKeyBool" name="Quiz.Questions[@(Model.Page - 1)].AKey[@(i)].AKeyBool" class="form-check-input mt-0" type="checkbox" value="true" aria-label="Checkbox for following text input">
-                            </div>
-                            <input asp-for="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" name="Quiz.Questions[@(Model.Page - 1)].A[@i].AString" class="form-control" type="text" value="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" placeholder="Enter your answer..." aria-label="Text input with checkbox">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">
+                            <input asp-for="@Model.Quiz.Questions[Model.Page - 1].AKey[i].AKeyBool" name="Quiz.Questions[@(Model.Page - 1)].AKey[@(i)].AKeyBool" class="form-check-input mt-0" type="checkbox" value="true" aria-label="Checkbox for following text input">
                         </div>
-                    }
-                }
-                else
-                {
-                    <p>@ViewBag.ErrorMessage</p>
+                        <input asp-for="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" name="Quiz.Questions[@(Model.Page - 1)].A[@i].AString" class="form-control" type="text" value="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" placeholder="Enter your answer..." aria-label="Text input with checkbox">
+                    </div>
                 }
                 <p>Check box for correct answer.</p>
                 <div class="row">
@@ -194,30 +175,44 @@
                         <button name="NextPage" class="btn btn-outline-dark float-start float-sm-end" type="submit" value="@(Model.Page + 1)">Next Question &#8722;&#62;</button>
                     </div>
                 </div>
+
                 <input name="Page" value="@Model.Page" hidden />
-                <input name="Quiz.Title" value="@Model.Quiz.Title" hidden />
-                <input name="Quiz.Description" value="@Model.Quiz.Description" hidden />
-                <input name="Quiz.Type" value="@Model.Quiz.Type" hidden />
-                @if (Model.Quiz.Id > 0)
+                <input name="Quiz.EndResult.DisplayScore" value="@Model.Quiz.EndResult?.DisplayScore.ToString()" hidden>
+                @if (Model.Quiz?.Id > 0)
                 {
                     <input name="Quiz.Id" value="@Model.Quiz.Id" hidden />
                 }
-                @if (Model.Quiz.Questions != null)
+                <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
+                <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />
+                <input name="Quiz.Description" value="@Model.Quiz?.Description" hidden />
+                <input name="Quiz.Type" value="@Model.Quiz?.Type" hidden />
+                @for (var i = 0; i < Model.Quiz?.Questions?.Count; i++)
                 {
-                    for (var i = 0; i < Model.Quiz.Questions.Count - 1; i++)
+                    if (Model.Page != (i + 1))
                     {
                         <input name="Quiz.Questions[@i]" value="@Model.Quiz.Questions[i]" hidden />
                         <input name="Quiz.Questions[@i].Q" value="@Model.Quiz.Questions[i].Q" hidden />
-                        @if (Model.Quiz.Questions[i].A != null)
+                        for (var j = 0; j < Model.Quiz.Questions[i].A.Count; j++)
                         {
-                            for (var j = 0; j < Model.Quiz.Questions[i].A.Count; j++)
-                            {
-                                //<input name="Quiz.Questions[@i].A[@j]" value="@Model.Quiz.Questions[i].A[j]" hidden />
-                                <input name="Quiz.Questions[@i].A[@j].AString" value="@Model.Quiz.Questions[i].A[j].AString" hidden />
-                                //<input name="Quiz.Questions[@i].AKey[@j]" value="@Model.Quiz.Questions[i].AKey[j]" hidden />
-                                <input name="Quiz.Questions[@i].AKey[@j].AKeyBool" value="@Model.Quiz.Questions[i].AKey[j].AKeyBool.ToString()" hidden />
-                            }
+                            <input name="Quiz.Questions[@(i)].A[@(j)].AString" value="@Model.Quiz.Questions[i].A[j].AString" hidden />
+                            <input name="Quiz.Questions[@i].AKey[@j].AKeyBool" value="@Model.Quiz.Questions[i].AKey[j].AKeyBool.ToString()" hidden />
                         }
+                    }
+                }
+                <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
+                <input name="Quiz.EndResult" value="@Model.Quiz?.EndResult" hidden />
+                <input name="Quiz.EndResult" value="@Model.Quiz?.EndResult?.DisplayScore" hidden />
+                @if (Model.Quiz?.EndResult?.EndTitles != null)
+                {
+                    @for (var i = 0; i < Model.Quiz?.EndResult?.EndTitles.Count; i++)
+                    {
+                        <input name="Quiz.EndResult.EndTitles[@i]" value="@Model.Quiz.EndResult.EndTitles[i]" hidden />
+                        <input name="Quiz.EndResult.EndTitles[@i].EndResultString" value="@Model.Quiz.EndResult.EndTitles[i].EndResultString" hidden />
+                    }
+                    @for (var i = 0; i < Model.Quiz?.EndResult?.EndMessages.Count; i++)
+                    {
+                        <input name="Quiz.EndResult.EndMessages[@i]" value="@Model.Quiz.EndResult.EndMessages[i]" hidden />
+                        <input name="Quiz.EndResult.EndMessages[@i].EndResultString" value="@Model.Quiz.EndResult.EndMessages[i].EndResultString" hidden />
                     }
                 }
             </form>

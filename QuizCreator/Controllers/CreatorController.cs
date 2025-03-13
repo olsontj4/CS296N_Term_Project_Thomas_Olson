@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using QuizCreator.Models;
 using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
-using System.Threading.Tasks;
 
 namespace QuizCreator.Controllers
 {
@@ -25,12 +24,15 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> CreatorStart(CreatorVM creatorVM)
         {
-            if (creatorVM.Quiz?.Id > 0)
+            if (creatorVM.Quiz?.Id > 0 && creatorVM.NextPage == 0)
             {
                 creatorVM.Quiz = await repo.GetQuizByIdAsync(creatorVM.Quiz.Id);
                 creatorVM.Quiz.IsComplete = false;
                 return View("Creator", creatorVM);
             }
+            ModelState.Remove("Quiz.EndResult.EndTitles");
+            ModelState.Remove("Quiz.EndResult.EndMessages");
+            ModelState.Remove("Quiz.EndResult.DisplayScore");
             if (creatorVM.Quiz != null && ModelState.IsValid )  //Success condition.
             {
                 if (creatorVM.NextPage > creatorVM.Quiz.Questions.Count)  //New question.
@@ -46,22 +48,9 @@ namespace QuizCreator.Controllers
                     creatorVM.Page = creatorVM.NextPage;
                     return View("Creator", creatorVM);
                 }
-                creatorVM.Quiz.Questions.Add(new());
-                creatorVM.Quiz.Questions[0].A.Add(new());
-                creatorVM.Quiz.Questions[0].AKey.Add(new AKey() { AKeyBool = false });
-                creatorVM.Page = 1;
-                return View("Creator", creatorVM);
             }
             else  //Failure condition.
             {
-                if (ModelState.Where(e => e.Value.Errors.Count > 0).ToList()[0].Value.Errors[0].ErrorMessage.ToString() != null)
-                {
-                    ViewBag.ErrorMessage = ModelState.Where(e => e.Value.Errors.Count > 0).ToList()[0].Value.Errors[0].ErrorMessage.ToString();
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "Error saving quiz.";
-                }
                 creatorVM.Page = 0;
                 return View("Creator", creatorVM);
             }
@@ -73,14 +62,31 @@ namespace QuizCreator.Controllers
                 creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Add(new());
                 creatorVM.Quiz.Questions[creatorVM.Page - 1].AKey.Add(new AKey() { AKeyBool = false });
                 creatorVM.AddAnswer = false;
-                creatorVM.Page = creatorVM.Quiz.Questions.Count;
                 return View("Creator", creatorVM);
             }
+            ModelState.Remove("Quiz.EndResult.EndTitles");
+            ModelState.Remove("Quiz.EndResult.EndMessages");
+            ModelState.Remove("Quiz.EndResult.DisplayScore");
             if (creatorVM.Quiz.Questions[creatorVM.Page - 1] != null && ModelState.IsValid)  //Success condition.
             {
                 if (creatorVM.Quiz.IsComplete == true)  //Last question complete.
                 {
-                    return View("Creator", creatorVM);
+                    if (creatorVM.Quiz.EndResult?.EndTitles != null)
+                    {
+                        return View("Creator", creatorVM);
+                    }
+                    else
+                    {
+                        creatorVM.Quiz.EndResult = new()
+                        {
+                            EndTitles = new(),
+                            EndMessages = new()
+                        };
+                        creatorVM.Quiz.EndResult.EndTitles.Add(new());
+                        creatorVM.Quiz.EndResult.EndMessages.Add(new());
+                        return View("Creator", creatorVM);
+                    }
+
                 }
                 else
                 {
@@ -108,21 +114,18 @@ namespace QuizCreator.Controllers
             }
             else  //Failure condition.
             {
-                if (ModelState.Where(e => e.Value.Errors.Count > 0).ToList()[0].Value.Errors[0].ErrorMessage.ToString() != null)
-                {
-                    ViewBag.ErrorMessage = ModelState.Where(e => e.Value.Errors.Count > 0).ToList()[0].Value.Errors[0].ErrorMessage.ToString();
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "Error saving quiz.";
-                }
-                creatorVM.Page = creatorVM.Quiz.Questions.Count;
                 return View("Creator", creatorVM);
             }
         }
         public async Task<IActionResult> CreatorPost(CreatorVM creatorVM)
         {
-            creatorVM.Page = 1;
+            creatorVM.Page = (creatorVM.Quiz.Questions.Count + 1);
+            if (creatorVM.NextPage != 0)
+            {
+                creatorVM.Quiz.IsComplete = false;
+                creatorVM.Page = creatorVM.Quiz.Questions.Count;
+                return View("Creator", creatorVM);
+            }
             foreach (var q in creatorVM.Quiz.Questions)
             {
                 foreach (var b in q.AKey)
@@ -144,20 +147,23 @@ namespace QuizCreator.Controllers
             creatorVM.Quiz.AppUser = await userManager.GetUserAsync(User);
             if (creatorVM.Quiz.EndResult != null && ModelState.IsValid)  //Success condition.
             {
+                if (creatorVM.Quiz.Id > 0)//Check whether quiz is new or being updated.
+                {
+                    if (creatorVM.Quiz.AppUser.UserName == User.Identity?.Name)//Check if user signed in is still the original creator.
+                    {
+                        if (await repo.DeleteQuizAsync(creatorVM.Quiz.Id) > 0)//Check if delete of original quiz was successful.
+                        {
+                            await repo.StoreQuizAsync(creatorVM.Quiz);//I was going to use my update method for the database, but it duplicated child classes in the quiz model.
+                            return RedirectToAction("Index", "Quiz");
+                        }
+                        return View("Creator", creatorVM);
+                    }
+                }
                 await repo.StoreQuizAsync(creatorVM.Quiz);
                 return RedirectToAction("Index", "Quiz");
             }
             else  //Failure condition.
             {
-                if (ModelState.Where(e => e.Value.Errors.Count > 0).ToList()[0].Value.Errors[0].ErrorMessage.ToString() != null)
-                {
-                    ViewBag.ErrorMessage = ModelState.Where(e => e.Value.Errors.Count > 0).ToList()[0].Value.Errors[0].ErrorMessage.ToString();
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "Error saving quiz.";
-                }
-                creatorVM.Page = creatorVM.Quiz.Questions.Count;
                 return View("Creator", creatorVM);
             }
         }
