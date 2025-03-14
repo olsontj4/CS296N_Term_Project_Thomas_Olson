@@ -23,9 +23,10 @@ namespace QuizCreator.Data
                     }
                 }
                 context.SaveChanges();  // Saving adds UserId to User objects
-                Quiz quiz1 = new Quiz()
+                Quiz quiz1 = new()
                 {
                     QuizId = 1,
+                    ImageUrl = "https://costumespecialists.com/wp-content/uploads/2018/09/pics-035.jpg",
                     Title = "Are you in the Kool Kids Klub?",
                     Description = "Take this quiz to figure out if you're a true Kool Kid!",
                     Type = "Trivia",
@@ -79,6 +80,7 @@ namespace QuizCreator.Data
                 Quiz quiz2 = new Quiz()
                 {
                     QuizId = 2,
+                    ImageUrl = "https://cdn.discordapp.com/avatars/393587013615353857/2c8797c3f58d6019c7890f80bbefe980?size=1024",
                     Title = "Are you Than?",
                     Description = "Take this quiz to figure out if you're a certified Than!",
                     Type = "Trivia",
@@ -551,6 +553,7 @@ namespace QuizCreator.Data
                 Quiz quiz4 = new Quiz()
                 {
                     QuizId = 4,
+                    ImageUrl = "https://media.discordapp.net/attachments/841054851215654943/1350192102843089006/coding_quiz_banner.jpg?ex=67d5d7e2&is=67d48662&hm=58bd5a5d444a993bb2d73ca05225df547a7592c754f6b8272369d9cf26023ac6&=&format=webp&width=1006&height=1006",
                     Title = "Are You a Coding Master?",
                     Description = "Take this quiz to see how well you know coding concepts and practices!",
                     Type = "Trivia",
