@@ -6,6 +6,7 @@
         public int Page { get; set; }
         public int NextPage { get; set; }
         public bool AddAnswer { get; set; } = false;
-        public bool DeleteAnswer { get; set; } = false;
+        public int DeleteAnswer { get; set; } = -1;
+        public int DeleteQuestion { get; set; } = -1;
     }
 }

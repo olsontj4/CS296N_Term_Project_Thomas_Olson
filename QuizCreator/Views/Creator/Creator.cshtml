@@ -144,7 +144,10 @@
                 <!--p class="form-label">Image:</p>
                 <input class="form-control" type="image" value="" /-->
                 <p class="form-label">Question @(Model.Page) of @(Model.Quiz?.Questions?.Count):</p>
-                <input asp-for="@Model.Quiz.Questions[Model.Page - 1].Q" class="form-control" name="Quiz.Questions[@(Model.Page - 1)].Q" type="text" value="@Model.Quiz?.Questions?[Model.Page - 1].Q" placeholder="Enter your question..."/>
+                <div class="input-group">
+                    <input asp-for="@Model.Quiz.Questions[Model.Page - 1].Q" class="form-control" name="Quiz.Questions[@(Model.Page - 1)].Q" type="text" value="@Model.Quiz?.Questions?[Model.Page - 1].Q" placeholder="Enter your question..." />
+                    <button name="DeleteQuestion" class="btn btn-outline-danger" type="submit" value="@(Model.Page - 1)">Delete Question</button>
+                </div>
                 <span asp-validation-for="@Model.Quiz.Title" class="text-danger"></span>
 
                 <p class="form-label">Answers:</p>
@@ -152,9 +155,17 @@
                 {
                     <div class="input-group mb-3">
                         <div class="input-group-text">
-                            <input asp-for="@Model.Quiz.Questions[Model.Page - 1].AKey[i].AKeyBool" name="Quiz.Questions[@(Model.Page - 1)].AKey[@(i)].AKeyBool" class="form-check-input mt-0" type="checkbox" value="true" aria-label="Checkbox for following text input">
+                            @if (Model.Quiz.Questions[Model.Page - 1].AKey?[i].AKeyBool == true)
+                            {
+                                <input asp-for="@Model.Quiz.Questions[Model.Page - 1].AKey[i].AKeyBool" class="form-check-input mt-0" type="checkbox" value="true" aria-label="Checkbox for following text input" checked>
+                            }
+                            else
+                            {
+                                <input asp-for="@Model.Quiz.Questions[Model.Page - 1].AKey[i].AKeyBool" class="form-check-input mt-0" type="checkbox" value="true" aria-label="Checkbox for following text input">
+                            }
                         </div>
-                        <input asp-for="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" name="Quiz.Questions[@(Model.Page - 1)].A[@i].AString" class="form-control" type="text" value="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" placeholder="Enter your answer..." aria-label="Text input with checkbox">
+                        <input asp-for="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" class="form-control" type="text" value="@Model.Quiz.Questions[Model.Page - 1].A[i].AString" placeholder="Enter your answer..." aria-label="Text input with checkbox">
+                        <button name="DeleteAnswer" class="btn btn-outline-danger" type="submit" value="@i">Remove</button>
                     </div>
                 }
                 <p>Check box for correct answer.</p>
@@ -190,12 +201,12 @@
                 {
                     if (Model.Page != (i + 1))
                     {
-                        <input name="Quiz.Questions[@i]" value="@Model.Quiz.Questions[i]" hidden />
+                        <input name="Quiz.Questions[@i]" value="Model.Quiz.Questions[@i]" hidden />
                         <input name="Quiz.Questions[@i].Q" value="@Model.Quiz.Questions[i].Q" hidden />
                         for (var j = 0; j < Model.Quiz.Questions[i].A.Count; j++)
                         {
                             <input name="Quiz.Questions[@(i)].A[@(j)].AString" value="@Model.Quiz.Questions[i].A[j].AString" hidden />
-                            <input name="Quiz.Questions[@i].AKey[@j].AKeyBool" value="@Model.Quiz.Questions[i].AKey[j].AKeyBool.ToString()" hidden />
+                            <input asp-for="@Model.Quiz.Questions[i].AKey[j].AKeyBool" value="@Model.Quiz.Questions[i].AKey?[j].AKeyBool.ToString()" hidden />
                         }
                     }
                 }

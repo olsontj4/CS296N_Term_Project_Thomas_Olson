@@ -64,6 +64,24 @@ namespace QuizCreator.Controllers
                 creatorVM.AddAnswer = false;
                 return View("Creator", creatorVM);
             }
+            else if (creatorVM.DeleteAnswer > -1)//Delete if more than two answers exist.
+            {
+                if (creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Count > 1)
+                {
+                    creatorVM.Quiz.Questions[creatorVM.Page - 1].A.RemoveAt(creatorVM.DeleteAnswer);
+                    creatorVM.Quiz.Questions[creatorVM.Page - 1].AKey.RemoveAt(creatorVM.DeleteAnswer);
+                }
+                return View("Creator", creatorVM);
+            }
+            else if (creatorVM.DeleteQuestion > -1)
+            {
+                if (creatorVM.Quiz.Questions.Count > 1)//Delete if more than two questions exist.
+                {
+                    creatorVM.Page = Math.Min(creatorVM.Quiz.Questions.Count - 1, creatorVM.Page);
+                    creatorVM.Quiz.Questions.RemoveAt(creatorVM.DeleteQuestion);
+                }
+                return View("Creator", creatorVM);
+            }
             ModelState.Remove("Quiz.EndResult.EndTitles");
             ModelState.Remove("Quiz.EndResult.EndMessages");
             ModelState.Remove("Quiz.EndResult.DisplayScore");
