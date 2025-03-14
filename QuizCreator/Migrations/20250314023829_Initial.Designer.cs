@@ -11,7 +11,7 @@ using QuizCreator.Data;
 namespace QuizCreator.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250312033810_Initial")]
+    [Migration("20250314023829_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -152,7 +152,7 @@ namespace QuizCreator.Migrations
 
             modelBuilder.Entity("QuizCreator.Models.A", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -160,10 +160,10 @@ namespace QuizCreator.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("QuestionId")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AId");
 
                     b.HasIndex("QuestionId");
 
@@ -172,17 +172,17 @@ namespace QuizCreator.Migrations
 
             modelBuilder.Entity("QuizCreator.Models.AKey", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AKeyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<bool>("AKeyBool")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("QuestionId")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AKeyId");
 
                     b.HasIndex("QuestionId");
 
@@ -258,35 +258,41 @@ namespace QuizCreator.Migrations
 
             modelBuilder.Entity("QuizCreator.Models.EndResult", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EndResultId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<bool>("DisplayScore")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("EndResultId");
+
+                    b.HasIndex("QuizId")
+                        .IsUnique();
 
                     b.ToTable("EndResult");
                 });
 
             modelBuilder.Entity("QuizCreator.Models.EndResultsMessage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EndResultsMessageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("EndResultId")
+                    b.Property<int>("EndResultId")
                         .HasColumnType("int");
 
                     b.Property<string>("EndResultString")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("EndResultsMessageId");
 
                     b.HasIndex("EndResultId");
 
@@ -295,18 +301,18 @@ namespace QuizCreator.Migrations
 
             modelBuilder.Entity("QuizCreator.Models.EndResultsTitle", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EndResultsTitleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("EndResultId")
+                    b.Property<int>("EndResultId")
                         .HasColumnType("int");
 
                     b.Property<string>("EndResultString")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("EndResultsTitleId");
 
                     b.HasIndex("EndResultId");
 
@@ -315,7 +321,7 @@ namespace QuizCreator.Migrations
 
             modelBuilder.Entity("QuizCreator.Models.Question", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("QuestionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -326,10 +332,10 @@ namespace QuizCreator.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("QuizId")
+                    b.Property<int>("QuizId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("QuestionId");
 
                     b.HasIndex("QuizId");
 
@@ -338,11 +344,12 @@ namespace QuizCreator.Migrations
 
             modelBuilder.Entity("QuizCreator.Models.Quiz", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("QuizId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("Date")
@@ -352,9 +359,6 @@ namespace QuizCreator.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
-
-                    b.Property<int?>("EndResultId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("longtext");
@@ -371,11 +375,9 @@ namespace QuizCreator.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("QuizId");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("EndResultId");
 
                     b.ToTable("Quizzes");
                 });
@@ -435,50 +437,65 @@ namespace QuizCreator.Migrations
                 {
                     b.HasOne("QuizCreator.Models.Question", null)
                         .WithMany("A")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QuizCreator.Models.AKey", b =>
                 {
                     b.HasOne("QuizCreator.Models.Question", null)
                         .WithMany("AKey")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("QuizCreator.Models.EndResult", b =>
+                {
+                    b.HasOne("QuizCreator.Models.Quiz", null)
+                        .WithOne("EndResult")
+                        .HasForeignKey("QuizCreator.Models.EndResult", "QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QuizCreator.Models.EndResultsMessage", b =>
                 {
                     b.HasOne("QuizCreator.Models.EndResult", null)
                         .WithMany("EndMessages")
-                        .HasForeignKey("EndResultId");
+                        .HasForeignKey("EndResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QuizCreator.Models.EndResultsTitle", b =>
                 {
                     b.HasOne("QuizCreator.Models.EndResult", null)
                         .WithMany("EndTitles")
-                        .HasForeignKey("EndResultId");
+                        .HasForeignKey("EndResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QuizCreator.Models.Question", b =>
                 {
                     b.HasOne("QuizCreator.Models.Quiz", null)
                         .WithMany("Questions")
-                        .HasForeignKey("QuizId");
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QuizCreator.Models.Quiz", b =>
                 {
                     b.HasOne("QuizCreator.Models.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("QuizCreator.Models.EndResult", "EndResult")
-                        .WithMany()
-                        .HasForeignKey("EndResultId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
-
-                    b.Navigation("EndResult");
                 });
 
             modelBuilder.Entity("QuizCreator.Models.EndResult", b =>
@@ -497,6 +514,8 @@ namespace QuizCreator.Migrations
 
             modelBuilder.Entity("QuizCreator.Models.Quiz", b =>
                 {
+                    b.Navigation("EndResult");
+
                     b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618

@@ -24,6 +24,7 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> CreatorStart(CreatorVM creatorVM)
         {
+            ModelState.Remove("Quiz.AppUser");
             if (creatorVM.Quiz?.QuizId > 0 && creatorVM.NextPage == 0)
             {
                 creatorVM.Quiz = await repo.GetQuizByIdAsync(creatorVM.Quiz.QuizId);
@@ -57,7 +58,8 @@ namespace QuizCreator.Controllers
         }
         public IActionResult CreatorQuestion(CreatorVM creatorVM)
         {
-            if(creatorVM.AddAnswer == true)  //Add answer button.
+            ModelState.Remove("Quiz.AppUser");
+            if (creatorVM.AddAnswer == true)  //Add answer button.
             {
                 creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Add(new());
                 creatorVM.Quiz.Questions[creatorVM.Page - 1].AKey.Add(new AKey() { AKeyBool = false });
@@ -137,6 +139,7 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> CreatorPost(CreatorVM creatorVM)
         {
+            ModelState.Remove("Quiz.AppUser");
             creatorVM.Page = (creatorVM.Quiz.Questions.Count + 1);
             if (creatorVM.NextPage != 0)
             {
