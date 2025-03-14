@@ -1262,7 +1262,7 @@ namespace QuizCreator.Data
                             },
                             AKey = new()
                             {
-                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
                                 new() { AKeyBool = false },
                                 new() { AKeyBool = false },
                                 new() { AKeyBool = false }
