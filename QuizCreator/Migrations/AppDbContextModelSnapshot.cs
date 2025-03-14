@@ -346,6 +346,7 @@ namespace QuizCreator.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("Date")
@@ -487,7 +488,9 @@ namespace QuizCreator.Migrations
                 {
                     b.HasOne("QuizCreator.Models.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
                 });

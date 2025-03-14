@@ -986,7 +986,7 @@ namespace QuizCreator.Data
                             new() { EndResultString = "Insect Explorer" },
                             new() { EndResultString = "Insect Newbie" }
                         },
-                                        EndMessages = new()
+                        EndMessages = new()
                         {
                             new() { EndResultString = "Wow, you really know your insects!" },
                             new() { EndResultString = "Nice job! With a little more research, you could easily become an expert." },
@@ -1007,186 +1007,427 @@ namespace QuizCreator.Data
                     Date = DateTime.Parse("2024-12-09T18:13:42.913606"),
                     IsComplete = true,
                     Questions = new List<Question>()
-    {
-        new Question()
-        {
-            Q = "Did Thomas do his homework?",
-            A = new()
-            {
-                new() { AString = "Yes!" },
-                new() { AString = "No." },
-                new() { AString = "Wait, that was due today?" }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false }
-            }
-        },
-        new Question()
-        {
-            Q = "Did Thomas show up to class on time?",
-            A = new()
-            {
-                new() { AString = "Yes!" },
-                new() { AString = "No." }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = true },
-                new() { AKeyBool = false }
-            }
-        },
-        new Question()
-        {
-            Q = "Did Thomas make a website?",
-            A = new()
-            {
-                new() { AString = "Yes!" },
-                new() { AString = "No." },
-                new() { AString = "Hi, I’m the answer for question 2! Oh shoot, I showed up too late..." }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = true },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false }
-            }
-        },
-        new Question()
-        {
-            Q = "Can you navigate on this website?",
-            A = new()
-            {
-                new() { AString = "Navigate to answer: Yes!" },
-                new() { AString = "Navigate to answer: No." }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = true },
-                new() { AKeyBool = false }
-            }
-        },
-        new Question()
-        {
-            Q = "Is it running on Azure?",
-            A = new()
-            {
-                new() { AString = "Yes!" },
-                new() { AString = "No." },
-                new() { AString = "Then maybe you should go catch it." }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = true },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false }
-            }
-        },
-        new Question()
-        {
-            Q = "Wow, this quiz seems to be going very well.",
-            A = new()
-            {
-                new() { AString = "All because Thomas did a good job making it!" },
-                new() { AString = "This is a very cool idea for a website, with good execution." },
-                new() { AString = "No, it’s really not." },
-                new() { AString = "Only because 🥺‘s taking it." }
-            },
-            AKey = new()
-            {
-                new() { AKeyId = 178, AKeyBool = true },
-                new() { AKeyId = 179, AKeyBool = true },
-                new() { AKeyId = 180, AKeyBool = false },
-                new() { AKeyId = 181, AKeyBool = false }
-            }
-        },
-        new Question()
-        {
-            QuestionId = 55,
-            ImageUrl = null,
-            Q = "Does the quiz creation part of the site work?",
-            A = new()
-            {
-                new() { AString = "Yes!" },
-                new() { AString = "No." },
-                new() { AString = "Oops, I didn’t mean to make this answer." },
-                new() { AString = "Wait, how do I delete it?" },
-                new() { AString = "Wait, there’s no delete button?" },
-                new() { AString = "Maybe I’ll just edit the quiz later." },
-                new() { AString = "I don’t see a button for that either!" },
-                new() { AString = "Maybe it’s under my account." },
-                new() { AString = "Let me just go to where it says Login..." },
-                new() { AString = "Wait, that’s not even a button! You can’t even click on it, its just text!" },
-                new() { AString = "He really thought we wouldn’t notice..." },
-                new() { AString = "I can’t get rid of any of these, help!" },
-                new() { AString = "HELP ME" },
-                new() { AString = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                new() { AString = "​" },
-                new() { AString = "​" },
-                new() { AString = "​" },
-                new() { AString = "​" },
-                new() { AString = "​" }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = true },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = true },
-                new() { AKeyBool = false },
-                new() { AKeyBool = true },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false }
-            }
-        },
-        new Question()
-        {
-            Q = "Was Thomas a good boy?",
-            A = new()
-            {
-                new() { AString = "Yes!" },
-                new() { AString = "No." },
-                new() { AString = "Wait, Thomas is a boy?" },
-                new() { AString = "Aww, who’s a good boy? Does he want a treat? Here boy, come get it!" }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = true },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false },
-                new() { AKeyBool = true }
-            }
-        },
-        new Question()
-        {
-            Q = "Is this quiz functioning?",
-            A = new()
-            {
-                new() { AString = "Yes!" },
-                new() { AString = "No." },
-                new() { AString = "What quiz?" }
-            },
-            AKey = new()
-            {
-                new() { AKeyBool = true },
-                new() { AKeyBool = false },
-                new() { AKeyBool = false }
-            }
-        }
-    }
+                    {
+                        new Question()
+                        {
+                            Q = "Did Thomas do his homework?",
+                            A = new()
+                            {
+                                new() { AString = "Yes!" },
+                                new() { AString = "No." },
+                                new() { AString = "Wait, that was due today?" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Did Thomas show up to class on time?",
+                            A = new()
+                            {
+                                new() { AString = "Yes!" },
+                                new() { AString = "No." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Did Thomas make a website?",
+                            A = new()
+                            {
+                                new() { AString = "Yes!" },
+                                new() { AString = "No." },
+                                new() { AString = "Hi, I’m the answer for question 2! Oh shoot, I showed up too late..." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Can you navigate on this website?",
+                            A = new()
+                            {
+                                new() { AString = "Navigate to answer: Yes!" },
+                                new() { AString = "Navigate to answer: No." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Is it running on Azure?",
+                            A = new()
+                            {
+                                new() { AString = "Yes!" },
+                                new() { AString = "No." },
+                                new() { AString = "Then maybe you should go catch it." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Wow, this quiz seems to be going very well.",
+                            A = new()
+                            {
+                                new() { AString = "All because Thomas did a good job making it!" },
+                                new() { AString = "This is a very cool idea for a website, with good execution." },
+                                new() { AString = "No, it’s really not." },
+                                new() { AString = "Only because 🥺‘s taking it." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Does the quiz creation part of the site work?",
+                            A = new()
+                            {
+                                new() { AString = "Yes!" },
+                                new() { AString = "No." },
+                                new() { AString = "Oops, I didn’t mean to make this answer." },
+                                new() { AString = "Wait, how do I delete it?" },
+                                new() { AString = "Wait, there’s no delete button?" },
+                                new() { AString = "Maybe I’ll just edit the quiz later." },
+                                new() { AString = "I don’t see a button for that either!" },
+                                new() { AString = "Maybe it’s under my account." },
+                                new() { AString = "Let me just go to where it says Login..." },
+                                new() { AString = "Wait, that’s not even a button! You can’t even click on it, its just text!" },
+                                new() { AString = "He really thought we wouldn’t notice..." },
+                                new() { AString = "I can’t get rid of any of these, help!" },
+                                new() { AString = "HELP ME" },
+                                new() { AString = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                                new() { AString = "​" },
+                                new() { AString = "​" },
+                                new() { AString = "​" },
+                                new() { AString = "​" },
+                                new() { AString = "​" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Was Thomas a good boy?",
+                            A = new()
+                            {
+                                new() { AString = "Yes!" },
+                                new() { AString = "No." },
+                                new() { AString = "Wait, Thomas is a boy?" },
+                                new() { AString = "Aww, who’s a good boy? Does he want a treat? Here boy, come get it!" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true }
+                            }
+                        },
+                        new Question()
+                        {
+                            Q = "Is this quiz functioning?",
+                            A = new()
+                            {
+                                new() { AString = "Yes!" },
+                                new() { AString = "No." },
+                                new() { AString = "What quiz?" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        }
+                    },
+                    EndResult = new()
+                    {
+                        EndTitles = new()
+                        {
+                            new() { EndResultString = "He deserves an A\u002B!" },
+                            new() { EndResultString = "He deserves an A, I guess." },
+                            new() { EndResultString = "Give him A B\u002B." },
+                            new() { EndResultString = "Give him an F." },
+                            new() { EndResultString = "Give him an A\u002B." }
+                        },
+                        EndMessages = new()
+                        {
+                            new() { EndResultString = "Oh, so it only gives an error message on the end title part of the creation screen. I see how it is, Thomas." },
+                            new() { EndResultString = "Oh, so it only gives an error message on the end title part of the creation screen. I see how it is." },
+                            new() { EndResultString = "Wait, that has A in it, so ig that means give him an A? Even though it only gives an error message on the end title part of the creation screen." },
+                            new() { EndResultString = "Mostly because it only gives an error message on the end title part of the creation screen, but sure, because of the quiz results too." },
+                            new() { EndResultString = "Clearly, you\u0027re just unfair. I mean, c\u0027mon, the site always gives the correct error messages, how can you say every single thing sucks, DAD? Just give him the A, even if you don\u0027t think he deserves it." }
+                        },
+                        DisplayScore = false
+                    },
+                };
+                Quiz quiz8 = new()
+                {
+                    QuizId = 8,
+                    Title = "Math quiz",
+                    Description = "07734",
+                    Type = "Trivia",
+                    Questions = new()
+                    {
+                        new()
+                        {
+                            Q = "What\u0027s 1\u002B5? ",
+                            A = new()
+                            {
+                                new() { AString = "Yes." },
+                                new() { AString = "8" },
+                                new() { AString= "1" },
+                                new() { AString = "6" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "What\u0027s 5\u002B1?",
+                            A = new()
+                            {
+                                new() { AString = "8" },
+                                new() { AString = "Yes." },
+                                new() { AString = "6" },
+                                new() { AString = "1" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "What\u0027s 78/13?",
+                            A = new()
+                            {
+                                new() { AString = "6" },
+                                new() { AString = "4.333..." },
+                                new() { AString = "3" },
+                                new() { AString = "No." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "What\u0027s 78\u00F713?",
+                            A = new()
+                            {
+                                new() { AString = "4.333..." },
+                                new() { AString = "No." },
+                                new() { AString = "6" },
+                                new() { AString = "3" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "Why was 6 afraid of 7?",
+                            A = new()
+                            {
+                                new() { AString = "Because 789." },
+                                new() { AString = "Because seven ate nine." },
+                                new() { AString = "Because he was a registered six offender." },
+                                new() { AString = "Because he ate 3 squared meals a day." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "What is the largest factor of 340 (besides itself) minus 11?",
+                            A = new()
+                            {
+                                new() { AString = "104" },
+                                new() { AString = "6" },
+                                new() { AString = "-1" },
+                                new() { AString = "57" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "Who invented math?",
+                            A = new()
+                            {
+                                new() { AString = "Pythagoras" },
+                                new() { AString = "6" },
+                                new() { AString = "Isaac Newton" },
+                                new() { AString = "Jonathon Math" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "What is the dot product of \u003C18,5,2\u003E\u22C5\u003C1,-4,4\u003E",
+                            A = new()
+                            {
+                                new() { AString = "6" },
+                                new() { AString = "\u003C18,-20,8\u003E" },
+                                new() { AString = "True" },
+                                new() { AString = "-2880" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "What is the formula Thomas created for turning percentage of questions correct into choice of numbered results ? ",
+                            A = new()
+                            {
+                                new() { AString = "\u230A100n - 100 - ns\u002Bs\u230B/ 100" },
+                                new() { AString = "6" },
+                                new() { AString = "round((n - 1) - s(n - 1) / 100)" },
+                                new() { AString = "n / s * 100 / (n - 1)\u002B1" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "\uD83D\uDC5E\uD83D\uDC5E\u002B\uD83D\uDC5E\uD83D\uDC5E\u002B\uD83D\uDC5E\uD83D\uDC5E= 30, \uD83E\uDD7E\uD83D\uDE4B\u200D\u2642\uFE0F\uD83E\uDD7E\u002B\uD83E\uDD7E\uD83D\uDE4B\u200D\u2642\uFE0F\uD83E\uDD7E\u002B\uD83D\uDC5E\uD83D\uDC5E= 20, \uD83C\uDF54\uD83C\uDF54\u002B\uD83C\uDF54\uD83C\uDF54\u002B\uD83E\uDD7E\uD83D\uDE4B\u200D\u2642\uFE0F\uD83E\uDD7E= 13, \uD83D\uDC5E\u002B\uD83D\uDC5E\uD83C\uDF54\uD83D\uDE4B\u200D\u2642\uFE0F\uD83C\uDF54\uD83D\uDC5Ex\uD83C\uDF54=? ",
+                            A = new()
+                            {
+                                new() { AString = "No." }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "What is \u222Be\u221B(2x) sin(\u03C0) / ln(x)\u2202x\u002B\u2211n, ignoring the constant of integration and assuming the summation ranges from n = 1 to 3 ? ",
+                            A = new()
+                            {
+                                new() { AString = "(2 ^ (5 / 2)sin(\u03C0)x ^ (3 / 2)(3ln(x) - 2)) / 3" },
+                                new() { AString = "6" },
+                                new() { AString = "\u2211n\u002BC\u2200n\u21D2\u211D" },
+                                new() { AString = "\u03C8\u208D\u2081\u208E(\u0393\u2032(x) / \u0393(x), where \u03B6 \u003Ex" }
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                                new() { AKeyBool = false }
+                            }
+                        }
+                    },
+                    EndResult = new()
+                    {
+                        EndTitles = new()
+                        {
+                            new() { EndResultString = "Congratulations! Your score is the lim(x\u21926) arcsin(1 / (x - 2 ^ e))!" },
+                            new() { EndResultString = "Congratulations! Your score is the lim(x\u21926) arcsin(1 / (x - 2 ^ e))!" },
+                            new() { EndResultString = "Congratulations! Your score is the lim(x\u21926) arcsin(1 / (x - 2 ^ e))!" },
+                            new() { EndResultString = "Congratulations! Your score is the lim(x\u21926) arcsin(1 / (x - 2 ^ e))!" }
+                        },
+                        EndMessages = new()
+                        {
+                            new() { EndResultString = "You\u0027ve earned my respect." },
+                            new() { EndResultString = "Man, what a nerd!" },
+                            new() { EndResultString = "That\u0027s probably a good thing ? " },
+                            new() { EndResultString = "That means it sucks. Try again. Actually, don\u0027t even bothering to try again, you clearly just don\u0027t have enough brain cells to make it worth bothering." }
+                        },
+                        DisplayScore = true,
+                    },
+                    AppUser = appUsers[6],
+                    Date = DateTime.Parse("12/09/2024"),
+                    IsComplete = true
                 };
 
                 context.Quizzes.Add(quiz1);  // queues up a quiz to be added to the DB
@@ -1195,6 +1436,8 @@ namespace QuizCreator.Data
                 context.Quizzes.Add(quiz4);
                 context.Quizzes.Add(quiz5);
                 context.Quizzes.Add(quiz6);
+                context.Quizzes.Add(quiz7);
+                context.Quizzes.Add(quiz8);
                 context.SaveChanges(); // stores all the quizzes in the DB
             }
         }

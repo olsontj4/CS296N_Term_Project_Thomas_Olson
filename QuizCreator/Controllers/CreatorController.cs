@@ -24,6 +24,7 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> CreatorStart(CreatorVM creatorVM)
         {
+            ModelState.Remove("Quiz.AppUser");
             if (creatorVM.Quiz?.QuizId > 0 && creatorVM.NextPage == 0)
             {
                 creatorVM.Quiz = await repo.GetQuizByIdAsync(creatorVM.Quiz.QuizId);
@@ -57,11 +58,30 @@ namespace QuizCreator.Controllers
         }
         public IActionResult CreatorQuestion(CreatorVM creatorVM)
         {
-            if(creatorVM.AddAnswer == true)  //Add answer button.
+            ModelState.Remove("Quiz.AppUser");
+            if (creatorVM.AddAnswer == true)  //Add answer button.
             {
                 creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Add(new());
                 creatorVM.Quiz.Questions[creatorVM.Page - 1].AKey.Add(new AKey() { AKeyBool = false });
                 creatorVM.AddAnswer = false;
+                return View("Creator", creatorVM);
+            }
+            else if (creatorVM.DeleteAnswer > -1)
+            {
+                if (creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Count > 1)//Delete if more than two answers exist.
+                {
+                    creatorVM.Quiz.Questions[creatorVM.Page - 1].A.RemoveAt(creatorVM.DeleteAnswer);
+                    creatorVM.Quiz.Questions[creatorVM.Page - 1].AKey.RemoveAt(creatorVM.DeleteAnswer);
+                }
+                return View("Creator", creatorVM);
+            }
+            else if (creatorVM.DeleteQuestion > -1)
+            {
+                if (creatorVM.Quiz.Questions.Count > 1)//Delete if more than two questions exist.
+                {
+                    creatorVM.Page = Math.Min(creatorVM.Quiz.Questions.Count - 1, creatorVM.Page);
+                    creatorVM.Quiz.Questions.RemoveAt(creatorVM.DeleteQuestion);
+                }
                 return View("Creator", creatorVM);
             }
             ModelState.Remove("Quiz.EndResult.EndTitles");
@@ -119,6 +139,7 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> CreatorPost(CreatorVM creatorVM)
         {
+            ModelState.Remove("Quiz.AppUser");
             creatorVM.Page = (creatorVM.Quiz.Questions.Count + 1);
             if (creatorVM.NextPage != 0)
             {
@@ -142,6 +163,15 @@ namespace QuizCreator.Controllers
                 creatorVM.Quiz.EndResult.EndTitles.Add(new());
                 creatorVM.Quiz.EndResult.EndMessages.Add(new());
                 creatorVM.AddAnswer = false;
+                return View("Creator", creatorVM);
+            }
+            else if (creatorVM.DeleteQuestion > -1)
+            {
+                if (creatorVM.Quiz.EndResult.EndTitles.Count > 1)//Delete if more than two results exist.
+                {
+                    creatorVM.Quiz.EndResult.EndTitles.RemoveAt(creatorVM.DeleteQuestion);
+                    creatorVM.Quiz.EndResult.EndMessages.RemoveAt(creatorVM.DeleteQuestion);
+                }
                 return View("Creator", creatorVM);
             }
             creatorVM.Quiz.AppUser = await userManager.GetUserAsync(User);

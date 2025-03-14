@@ -47,14 +47,9 @@
                                 </li>
                             }
                             //Quiz editor for logged-in user.
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Editor" asp-action="Index">
-                                    <i class="fas fa-pen"></i>&nbsp;Quiz Editor
-                                </a>
-                            </li>
                             // signed-in user - Log Out button and username
                             <li class="nav-item">
-                                <a class="nav-link text-dark">
+                                <a class="nav-link text-dark" asp-controller="Editor" asp-action="Index">
                                     <i class="fas fa-user"></i>&nbsp;@User.Identity?.Name
                                 </a>
                             </li>
