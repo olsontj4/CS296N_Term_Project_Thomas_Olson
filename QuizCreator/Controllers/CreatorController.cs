@@ -64,9 +64,9 @@ namespace QuizCreator.Controllers
                 creatorVM.AddAnswer = false;
                 return View("Creator", creatorVM);
             }
-            else if (creatorVM.DeleteAnswer > -1)//Delete if more than two answers exist.
+            else if (creatorVM.DeleteAnswer > -1)
             {
-                if (creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Count > 1)
+                if (creatorVM.Quiz.Questions[creatorVM.Page - 1].A.Count > 1)//Delete if more than two answers exist.
                 {
                     creatorVM.Quiz.Questions[creatorVM.Page - 1].A.RemoveAt(creatorVM.DeleteAnswer);
                     creatorVM.Quiz.Questions[creatorVM.Page - 1].AKey.RemoveAt(creatorVM.DeleteAnswer);
@@ -160,6 +160,15 @@ namespace QuizCreator.Controllers
                 creatorVM.Quiz.EndResult.EndTitles.Add(new());
                 creatorVM.Quiz.EndResult.EndMessages.Add(new());
                 creatorVM.AddAnswer = false;
+                return View("Creator", creatorVM);
+            }
+            else if (creatorVM.DeleteQuestion > -1)
+            {
+                if (creatorVM.Quiz.EndResult.EndTitles.Count > 1)//Delete if more than two results exist.
+                {
+                    creatorVM.Quiz.EndResult.EndTitles.RemoveAt(creatorVM.DeleteQuestion);
+                    creatorVM.Quiz.EndResult.EndMessages.RemoveAt(creatorVM.DeleteQuestion);
+                }
                 return View("Creator", creatorVM);
             }
             creatorVM.Quiz.AppUser = await userManager.GetUserAsync(User);
