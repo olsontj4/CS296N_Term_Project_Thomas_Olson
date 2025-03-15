@@ -50,7 +50,7 @@ namespace QuizCreator.Repos
         }
         public async Task<List<Quiz>> FilterAllQuizzesAsync(SearchVM searchVM)
         {
-            var query = context.Quizzes
+            IQueryable<Quiz> query = context.Quizzes
                 .Where(q => q.IsComplete == true)
                 .Where(q => string.IsNullOrEmpty(searchVM.Search) ||
                     q.Title.Contains(searchVM.Search) ||
@@ -66,8 +66,7 @@ namespace QuizCreator.Repos
                     .ThenInclude(q => q.EndTitles)
                 .Include(q => q.EndResult)
                     .ThenInclude(q => q.EndMessages)
-                .Include(q => q.AppUser)
-                .Take(searchVM.ResultsPerPage == -1 ? int.MaxValue : searchVM.ResultsPerPage);
+                .Include(q => q.AppUser);
             switch (searchVM.SortBy)
             {
                 case "Date (Newest)":
@@ -80,6 +79,7 @@ namespace QuizCreator.Repos
                     query = query.OrderBy(q => q.Date);
                     break;
             }
+            query = query.Take(searchVM.ResultsPerPage == -1 ? int.MaxValue : searchVM.ResultsPerPage);
             return await query.ToListAsync();
         }
         public async Task<Quiz> GetQuizByIdAsync(int id)
