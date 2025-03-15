@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizCreator.Models;
+using QuizCreator.Models.ViewModels;
 using System.Runtime.Intrinsics.X86;
 
 namespace QuizCreator.Repos
@@ -15,7 +16,7 @@ namespace QuizCreator.Repos
         {
             throw new NotImplementedException();
         }
-        public Task<List<Quiz>> FilterAllQuizzesAsync(string search)
+        public Task<List<Quiz>> FilterAllQuizzesAsync(SearchVM searchVM)
         {
             throw new NotImplementedException();
         }

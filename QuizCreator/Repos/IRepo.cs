@@ -8,7 +8,7 @@ namespace QuizCreator.Repos
     {
         public Task<List<Quiz>> GetAllQuizzesAsync();// Returns all Quiz objects
         public Task<List<Quiz>> GetUserQuizzesAsync(string id);
-        public Task<List<Quiz>> FilterAllQuizzesAsync(string search);//Search for specific quizzes.
+        public Task<List<Quiz>> FilterAllQuizzesAsync(SearchVM searchVM);//Search for specific quizzes.
         public Task<Quiz> GetQuizByIdAsync(int id);// Returns a model object
         public Task<int> StoreQuizAsync(Quiz model);// Saves a model object to the db
         public Task<int> UpdateQuizAsync(Quiz model);

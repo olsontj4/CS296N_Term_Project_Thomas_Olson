@@ -30,7 +30,7 @@ namespace QuizCreator.Controllers
         {
             if (searchVM.Search != null)
             {
-                List<Quiz> quizzes = await repo.FilterAllQuizzesAsync(searchVM.Search);
+                List<Quiz> quizzes = await repo.FilterAllQuizzesAsync(searchVM);
                 searchVM.Quizzes = quizzes;
                 return View("Index", searchVM);
             }

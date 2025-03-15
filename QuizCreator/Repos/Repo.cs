@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizCreator.Data;
 using QuizCreator.Models;
+using QuizCreator.Models.ViewModels;
 
 namespace QuizCreator.Repos
 {
@@ -41,21 +42,79 @@ namespace QuizCreator.Repos
                 .Include(q => q.AppUser)
                 .ToListAsync();
         }
-        public async Task<List<Quiz>> FilterAllQuizzesAsync(string search)
+        public async Task<List<Quiz>> FilterAllQuizzesAsync(SearchVM searchVM)
         {
-            return await context.Quizzes
-                .Where(q => q.IsComplete == true)
-                .Where(q => q.Title.Contains(search) || q.Description.Contains(search) || q.AppUser.UserName.Contains(search))
-                .Include(q => q.Questions)
-                .ThenInclude(q => q.A)
-                .Include(q => q.Questions)
-                .ThenInclude(q => q.AKey)
-                .Include(q => q.EndResult)
-                .ThenInclude(q => q.EndTitles)
-                .Include(q => q.EndResult)
-                .ThenInclude(q => q.EndMessages)
-                .Include(q => q.AppUser)
-                .ToListAsync();
+            if (searchVM.Search != null)
+            {
+                if (searchVM.ResultsPerPage == -1)
+                {
+                    return await context.Quizzes
+                        .Where(q => q.IsComplete == true)
+                        .Where(q => q.Title.Contains(searchVM.Search) || q.Description.Contains(searchVM.Search) || q.AppUser.UserName.Contains(searchVM.Search))
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.A)
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.AKey)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndTitles)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndMessages)
+                        .Include(q => q.AppUser)
+                        .ToListAsync();
+                }
+                else
+                {
+                    return await context.Quizzes
+                        .Where(q => q.IsComplete == true)
+                        .Where(q => q.Title.Contains(searchVM.Search) || q.Description.Contains(searchVM.Search) || q.AppUser.UserName.Contains(searchVM.Search))
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.A)
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.AKey)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndTitles)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndMessages)
+                        .Include(q => q.AppUser)
+                        .Take(8)
+                        .ToListAsync();
+                }
+            }
+            else
+            {
+                if (searchVM.ResultsPerPage == -1)
+                {
+                    return await context.Quizzes
+                        .Where(q => q.IsComplete == true)
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.A)
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.AKey)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndTitles)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndMessages)
+                        .Include(q => q.AppUser)
+                        .ToListAsync();
+                }
+                else
+                {
+                    return await context.Quizzes
+                        .Where(q => q.IsComplete == true)
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.A)
+                        .Include(q => q.Questions)
+                        .ThenInclude(q => q.AKey)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndTitles)
+                        .Include(q => q.EndResult)
+                        .ThenInclude(q => q.EndMessages)
+                        .Include(q => q.AppUser)
+                        .Take(8)
+                        .ToListAsync();
+                }
+            }
+
         }
         public async Task<Quiz> GetQuizByIdAsync(int id)
         {

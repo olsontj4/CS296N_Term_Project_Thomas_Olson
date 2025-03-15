@@ -16,8 +16,8 @@ namespace QuizCreator.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var quizzes = await repo.GetAllQuizzesAsync();
             var searchVM = new SearchVM();
+            var quizzes = await repo.FilterAllQuizzesAsync(searchVM);
             searchVM.Quizzes = quizzes;
             return View(searchVM);
         }
@@ -25,14 +25,14 @@ namespace QuizCreator.Controllers
         {
             if (searchVM.Search != null)
             {
-                List<Quiz> quizzes = await repo.FilterAllQuizzesAsync(searchVM.Search);
+                List<Quiz> quizzes = await repo.FilterAllQuizzesAsync(searchVM);
                 searchVM.Quizzes = quizzes;
                 return View("Index", searchVM);
             }
             else
             {
-                var quizzes = await repo.GetAllQuizzesAsync();
                 searchVM = new SearchVM();
+                var quizzes = await repo.FilterAllQuizzesAsync(searchVM);
                 searchVM.Quizzes = quizzes;
                 return View("Index", searchVM);
             }
@@ -40,12 +40,22 @@ namespace QuizCreator.Controllers
         public async Task<IActionResult> Quiz(int id)  //First page of quiz.
         {
             var quiz = await repo.GetQuizByIdAsync(id);
-            QuizVM vm = new QuizVM();
-            vm.Quiz = quiz;
-            return View(vm);
+            if (quiz != null)
+            {
+                QuizVM vm = new()
+                {
+                    Quiz = quiz
+                };
+                return View(vm);
+            }
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> QuizQuestionAsync([FromForm]QuizVM quizVM)  //Each question in quiz.
         {
+            if (quizVM.Quiz == null)
+            {
+                return RedirectToAction("Index");
+            }
             if (quizVM.AnswerInput != 0 && quizVM.AnswerInput != null)
             {
                 quizVM.UserA.Add(quizVM.AnswerInput);
