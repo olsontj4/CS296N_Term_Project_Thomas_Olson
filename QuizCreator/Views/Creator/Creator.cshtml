@@ -18,8 +18,10 @@
         {
             <form asp-controller="Creator" asp-action="CreatorStart">
                 <div class="text-danger" asp-validation-summary="All"></div>
-                <!--p class="form-label">Image:</p>
-                <input class="form-control" type="image" value="" /-->
+                <p class="form-label">Image:</p>
+                <input asp-for="@Model.Quiz.ImageUrl" class="form-control" type="url" value="@Model.Quiz?.ImageUrl" placeholder="Enter image link..."/>
+                <span asp-validation-for="@Model.Quiz.ImageUrl" class="text-danger"></span>
+
                 <p class="form-label">Title:</p>
                 <input asp-for="@Model.Quiz.Title" class="form-control" name="Quiz.Title" type="text" value="@Model.Quiz?.Title" placeholder="Enter a title..."/>
                 <span asp-validation-for="@Model.Quiz.Title" class="text-danger"></span>
@@ -138,6 +140,7 @@
                     <input name="Quiz.QuizId" value="@Model.Quiz.QuizId" hidden />
                 }
                 <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
+                <input asp-for="@Model.Quiz.ImageUrl" value="@Model.Quiz?.ImageUrl" hidden />
                 <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />
                 <input name="Quiz.Description" value="@Model.Quiz?.Description" hidden />
                 <input name="Quiz.Type" value="@Model.Quiz?.Type" hidden />
@@ -224,6 +227,7 @@
                     <input name="Quiz.QuizId" value="@Model.Quiz.QuizId" hidden />
                 }
                 <input name="Quiz.IsComplete" value="@Model.Quiz?.IsComplete.ToString()" hidden />
+                <input asp-for="@Model.Quiz.ImageUrl" value="@Model.Quiz?.ImageUrl" hidden />
                 <input name="Quiz.Title" value="@Model.Quiz?.Title" hidden />
                 <input name="Quiz.Description" value="@Model.Quiz?.Description" hidden />
                 <input name="Quiz.Type" value="@Model.Quiz?.Type" hidden />

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuizCreator.Models;
 using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
+using QuizCreator.Tools;
 
 namespace QuizCreator.Controllers
 {
@@ -25,11 +26,23 @@ namespace QuizCreator.Controllers
         public async Task<IActionResult> CreatorStart(CreatorVM creatorVM)
         {
             ModelState.Remove("Quiz.AppUser");
-            if (creatorVM.Quiz?.QuizId > 0 && creatorVM.NextPage == 0)
+            if (creatorVM.Quiz?.QuizId > 0 && creatorVM.NextPage == 0)//Edit existing quiz.
             {
                 creatorVM.Quiz = await repo.GetQuizByIdAsync(creatorVM.Quiz.QuizId);
                 creatorVM.Quiz.IsComplete = false;
+                ModelState.Remove("Quiz.Title");
+                ModelState.Remove("Quiz.Description");
+                ModelState.Remove("Quiz.Type");
                 return View("Creator", creatorVM);
+            }
+            if (creatorVM.Quiz?.ImageUrl != null)
+            {
+                creatorVM.Quiz?.ImageUrl.Trim();
+                ImageValidator imageValidator = new();
+                if (imageValidator.IsValid(creatorVM.Quiz.ImageUrl) != true)
+                {
+                    ModelState.AddModelError("Quiz.ImageUrl", "Unsupported file type or content provider.  Accepted types: .jpg, .png, .gif.  Image hosts: Discord.");
+                }
             }
             ModelState.Remove("Quiz.EndResult.EndTitles");
             ModelState.Remove("Quiz.EndResult.EndMessages");
@@ -175,6 +188,15 @@ namespace QuizCreator.Controllers
                 return View("Creator", creatorVM);
             }
             creatorVM.Quiz.AppUser = await userManager.GetUserAsync(User);
+            if (creatorVM.Quiz?.ImageUrl != null)
+            {
+                creatorVM.Quiz?.ImageUrl.Trim();
+                ImageValidator imageValidator = new();
+                if (imageValidator.IsValid(creatorVM.Quiz.ImageUrl) != true)
+                {
+                    ModelState.AddModelError("Quiz.ImageUrl", "Image failed validation.");
+                }
+            }
             if (creatorVM.Quiz.EndResult != null && ModelState.IsValid)  //Success condition.
             {
                 if (creatorVM.Quiz.QuizId > 0)//Check whether quiz is new or being updated.

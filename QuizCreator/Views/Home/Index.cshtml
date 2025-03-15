@@ -16,11 +16,11 @@
                 <div class="card bg-dark-subtle col-lg-4 col-md-6 col-12 h-100 mb-3 text-center">
                     @if (quiz.ImageUrl == null)
                     {
-                        <img style="height: 100px;" class="img-fluid rounded pt-2" src="/images/placeholder-image.jpg" />
+                        <img style="height: 300px; object-fit: cover;" class="img-fluid rounded pt-2" src="/images/placeholder-image.jpg" />
                     }
                     else
                     {
-                        <img style="height: 100px;" class="img-fluid rounded pt-2" src="@quiz.ImageUrl" />
+                        <img style="height: 300px; object-fit: cover;" class="img-fluid rounded pt-2" src="@quiz.ImageUrl" />
                     }
                     <h3>@quiz.Title</h3>
                     <p>@quiz.Description</p>

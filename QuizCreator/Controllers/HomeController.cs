@@ -19,7 +19,8 @@ namespace QuizCreator.Controllers
         {
             var featured = new List<int>()
             {
-                6
+                6,
+                4
             };
             var quizzes = new List<Quiz>();
             for (int i = 0; i < featured.Count; i++)
