@@ -4,6 +4,7 @@ using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
 using QuizCreator.Tools;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace QuizCreator.Controllers
 {
@@ -17,25 +18,25 @@ namespace QuizCreator.Controllers
         public async Task<IActionResult> Index()
         {
             var searchVM = new SearchVM();
+            searchVM.ResultsPerPage = 8;
             var quizzes = await repo.FilterAllQuizzesAsync(searchVM);
+            searchVM.ResultsPerPage = 0;
             searchVM.Quizzes = quizzes;
             return View(searchVM);
         }
         public async Task<IActionResult> Search(SearchVM searchVM)
         {
-            if (searchVM.Search != null)
+            if (searchVM.ResultsPerPage == 0)
             {
-                List<Quiz> quizzes = await repo.FilterAllQuizzesAsync(searchVM);
-                searchVM.Quizzes = quizzes;
-                return View("Index", searchVM);
+                searchVM.ResultsPerPage = 8;
+                searchVM.Quizzes = await repo.FilterAllQuizzesAsync(searchVM);
+                searchVM.ResultsPerPage = 0;
             }
             else
             {
-                searchVM = new SearchVM();
-                var quizzes = await repo.FilterAllQuizzesAsync(searchVM);
-                searchVM.Quizzes = quizzes;
-                return View("Index", searchVM);
+                searchVM.Quizzes = await repo.FilterAllQuizzesAsync(searchVM);
             }
+            return View("Index", searchVM);
         }
         public async Task<IActionResult> Quiz(int id)  //First page of quiz.
         {

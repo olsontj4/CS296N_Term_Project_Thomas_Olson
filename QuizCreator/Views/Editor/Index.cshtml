@@ -8,7 +8,7 @@
     <hr />
 </div>
 <div class="container mb-3">
-    <form asp-controller="Quiz" asp-action="Search">
+    <form method="post" asp-controller="Editor" asp-action="Index">
         <div class="input-group">
             <input class="form-control mr-sm-2" type="search" name="Search" value="" placeholder="Search..." id="Search" aria-label="Search..." aria-describedby="SearchButton" />
             <button class="btn btn-outline-primary" type="submit" id="SearchButton">Submit</button>

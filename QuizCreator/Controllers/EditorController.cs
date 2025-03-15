@@ -22,25 +22,20 @@ namespace QuizCreator.Controllers
         {
             var searchVM = new SearchVM();
             var appUser = await userManager.GetUserAsync(User);
-            searchVM.Quizzes = await repo.GetUserQuizzesAsync(appUser.Id);
+            searchVM.Quizzes = await repo.GetUserQuizzesAsync(appUser.Id, string.Empty);
             return View(searchVM);
         }
         [HttpPost]
         public async Task<IActionResult> Index(SearchVM searchVM)
         {
-            if (searchVM.Search != null)
+            if (searchVM == null)
             {
-                List<Quiz> quizzes = await repo.FilterAllQuizzesAsync(searchVM);
-                searchVM.Quizzes = quizzes;
-                return View("Index", searchVM);
-            }
-            else
-            {
-                var quizzes = await repo.GetAllQuizzesAsync();
                 searchVM = new SearchVM();
-                searchVM.Quizzes = quizzes;
-                return View("Index", searchVM);
             }
+            var appUser = await userManager.GetUserAsync(User);
+            var quizzes = await repo.GetUserQuizzesAsync(appUser.Id, searchVM.Search);
+            searchVM.Quizzes = quizzes;
+            return View("Index", searchVM);
         }
         public async Task<IActionResult> DeleteQuiz(int quizId)
         {

@@ -8,7 +8,70 @@
     <hr />
 </div>
 <div class="container mb-3">
-    <form asp-controller="Quiz" asp-action="Search">
+    <form class="form-inline" asp-controller="Quiz" asp-action="Search">
+        <input class="form-control" type="date" name="date" value="" />
+        <select asp-for="@Model.SortBy" class="form-select">
+            <option hidden>Sort by:</option>
+            @if (Model.SortBy == "Date")
+            {
+                <option value="Date" selected>Date (Oldest)</option>
+            }
+            else
+            {
+                <option value="Date">Date (Oldest)</option>
+            }
+            @if (Model.SortBy == "Date (Newest)")
+            {
+                <option value="Date (Newest)" selected>Date (Newest)</option>
+            }
+            else
+            {
+                <option value="Date (Newest)">Date (Newest)</option>
+            }
+            @if (Model.SortBy == "Name")
+            {
+                <option value="Name" selected>Name</option>
+            }
+            else
+            {
+                <option value="Name">Name</option>
+            }
+        </select>
+        <select asp-for="@Model.ResultsPerPage" class="form-select">
+            <option hidden>Results per page:</option>
+            @if (Model.ResultsPerPage == 8)
+            {
+                <option value="8" selected>8</option>
+            }
+            else
+            {
+                <option value="8">8</option>
+            }
+            @if (Model.ResultsPerPage == 12)
+            {
+                <option value="12" selected>12</option>
+            }
+            else
+            {
+                <option value="12">12</option>
+            }
+            @if (Model.ResultsPerPage == 16)
+            {
+                <option value="16" selected>16</option>
+            }
+            else
+            {
+                <option value="16">16</option>
+            }
+            @if (Model.ResultsPerPage == -1)
+            {
+                <option value="-1" selected>All</option>
+            }
+            else
+            {
+                <option value="-1">All</option>
+            }
+        </select>
         <div class="input-group">
             <input class="form-control mr-sm-2" type="search" name="Search" value="" placeholder="Search..." id="Search" aria-label="Search..." aria-describedby="SearchButton" />
             <button class="btn btn-outline-primary" type="submit" id="SearchButton">Submit</button>

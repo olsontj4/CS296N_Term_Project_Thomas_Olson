@@ -12,7 +12,7 @@ namespace QuizCreator.Repos
         {
             throw new NotImplementedException();
         }
-        public Task<List<Quiz>> GetUserQuizzesAsync(string id)
+        public Task<List<Quiz>> GetUserQuizzesAsync(string id, string search)
         {
             throw new NotImplementedException();
         }
