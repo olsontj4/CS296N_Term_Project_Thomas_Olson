@@ -51,10 +51,12 @@
                     numAnswers = Model.UserA.Count();
                 }
                 int i = 0;
-                foreach (var a in @Model.AnswersInView)
+                foreach (var a in Model.AnswersInView)
                 {
-                    <input class="form-check-input" asp-for="@Model.AnswerInput" name="AnswerInput" type="radio" value="@a.AId" required>
-                    <label class="form-check-label" asp-for="@Model.AnswerInput">@a.AString</label>
+                    <label class="form-check-label" id="@a.AId">
+                        <input class="form-check-input" asp-for="@Model.AnswerInput" id="@a.AId" name="AnswerInput" type="radio" value="@a.AId" required>
+                        @a.AString
+                    </label>
                     <br />
                 }
                 foreach(var a in Model.UserA)
