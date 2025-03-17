@@ -20,14 +20,17 @@ namespace QuizTests
             {
                 Quiz = await repo.GetQuizByIdAsync(1)
             };
-            quizVM.UserA.Add(3);
+            quizVM.UserA.Add(1);
+            quizVM.UserA.Add(4);
             quizVM.UserA.Add(6);
             quizVM.UserA.Add(8);
-            quizVM.UserA.Add(16);
+            quizVM.UserA.Add(10);
+            quizVM.UserA.Add(12);
             Assert.NotNull(quizVM.Quiz);
             quizVM = Scoring.CheckAll(quizVM);
-            Assert.Equal(25, Scoring.CheckAll(quizVM).Score);
-            Assert.Equal("You're not a Than.", quizVM.EndTitle);
+            Assert.Equal(17, Scoring.CheckAll(quizVM).Score);//Expected score.
+            Assert.Equal("37", quizVM.EndTitle);//Score maximum.
+            Assert.Equal("13", quizVM.EndMessage);//Score minimum.
         }
         [Fact]
         public void ImageValidation()

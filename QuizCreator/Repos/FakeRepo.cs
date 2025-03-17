@@ -34,93 +34,109 @@ namespace QuizCreator.Repos
                 IsComplete = true,
                 Questions = new List<Question>()
                     {
-                        new Question()
+                        new()
                         {
-                            Q = "What's your name?",
+                            Q = "",
                             A = new()
                             {
-                                new() { AId = 1, AString = "Dylan." },
-                                new() { AId = 2, AString = "Logan." },
-                                new() { AId = 3, AString = "Than." },
-                                new() { AId = 4, AString = "Thomas." }
-                            },
-                            AKey = new()
-                            {
-                                new() { AKeyBool = false },
-                                new() { AKeyBool = false },
-                                new() { AKeyBool = true },
-                                new() { AKeyBool = false }
-                            }
-                        },
-                        new Question()
-                        {
-                            Q = "What's your opinion on toast?",
-                            A = new()
-                            {
-                                new() { AId = 5,  AString = "I love it." },
-                                new() { AId = 6,  AString = "I hate it." },
-                                new() { AId = 7,  AString = "I'm toast." }
-                            },
-                            AKey = new()
-                            {
-                                new() { AKeyBool = false },
-                                new() { AKeyBool = false },
-                                new() { AKeyBool = true }
-                            }
-                        },
-                        new Question()
-                        {
-                            Q = "What's your profile picture?",
-                            A = new()
-                            {
-                                new() { AId = 8,  AString = "Aubrey." },
-                                new() { AId = 9,  AString = "Basil." },
-                                new() { AId = 10,  AString = "Kel." },
-                                new() { AId = 11,  AString = "Sprout mole." }
-                            },
-                            AKey = new()
-                            {
-                                new() { AKeyBool = false },
-                                new() { AKeyBool = true },
-                                new() { AKeyBool = false },
-                                new() { AKeyBool = false }
-                            }
-                        },
-                        new Question()
-                        {
-                            Q = "Yummy Thomas?",
-                            A = new()
-                            {
-                                new() { AId = 12,  AString = "Yummy Thomas. >:3" },
-                                new() { AId = 13,  AString = "Yes." },
-                                new() { AId = 14,  AString = "Maybe." },
-                                new() { AId = 15,  AString = "Not really." },
-                                new() { AId = 16,  AString = "No." }
+                                new() { AId = 1 },
+                                new() { AId = 2 },
                             },
                             AKey = new()
                             {
                                 new() { AKeyBool = true },
                                 new() { AKeyBool = false },
+                            }
+                        },
+                        new()
+                        {
+                            Q = "",
+                            A = new()
+                            {
+                                new() { AId = 3 },
+                                new() { AId = 4 },
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
                                 new() { AKeyBool = false },
+                            }
+                        },
+                        new()
+                        {
+                            Q = "",
+                            A = new()
+                            {
+                                new() { AId = 5 },
+                                new() { AId = 6 },
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
                                 new() { AKeyBool = false },
-                                new() { AKeyBool = false }
+                            }
+                        },
+                        new()
+                        {
+                            Q = "",
+                            A = new()
+                            {
+                                new() { AId = 7 },
+                                new() { AId = 8 },
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                            }
+                        },
+                        new()
+                        {
+                            Q = "",
+                            A = new()
+                            {
+                                new() { AId = 9 },
+                                new() { AId = 10 },
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
+                            }
+                        },
+                        new()
+                        {
+                            Q = "",
+                            A = new()
+                            {
+                                new() { AId = 11 },
+                                new() { AId = 12 },
+                            },
+                            AKey = new()
+                            {
+                                new() { AKeyBool = true },
+                                new() { AKeyBool = false },
                             }
                         },
                     },
                 EndResult = new EndResult()
                 {
                     EndTitles = new()
-                        {
-                            new() { EndResultString = "You're a certified Than!!" },
-                            new() { EndResultString = "You might be a Than." },
-                            new() { EndResultString = "You're not a Than." }
-                        },
+                    {
+                        new() { EndResultString = "100" },
+                        new() { EndResultString = "87" },
+                        new() { EndResultString = "62" },
+                        new() { EndResultString = "37" },
+                        new() { EndResultString = "12" }
+                    },
                     EndMessages = new()
-                        {
-                            new() { EndResultString = "You're the coolest guy bestest guy." },
-                            new() { EndResultString = "Not a fully fledged one, though." },
-                            new() { EndResultString = "What's wrong with you?" }
-                        },
+                    {
+                        new() { EndResultString = "88" },
+                        new() { EndResultString = "63" },
+                        new() { EndResultString = "38" },
+                        new() { EndResultString = "13" },
+                        new() { EndResultString = "0" }
+                    },
                     DisplayScore = false
                 }
             };
