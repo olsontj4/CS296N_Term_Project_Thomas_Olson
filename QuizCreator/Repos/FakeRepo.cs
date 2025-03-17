@@ -39,10 +39,10 @@ namespace QuizCreator.Repos
                             Q = "What's your name?",
                             A = new()
                             {
-                                new() { AString = "Dylan." },
-                                new() { AString = "Logan." },
-                                new() {AString = "Than." },
-                                new() {AString = "Thomas." }
+                                new() { AId = 1, AString = "Dylan." },
+                                new() { AId = 2, AString = "Logan." },
+                                new() { AId = 3, AString = "Than." },
+                                new() { AId = 4, AString = "Thomas." }
                             },
                             AKey = new()
                             {
@@ -57,9 +57,9 @@ namespace QuizCreator.Repos
                             Q = "What's your opinion on toast?",
                             A = new()
                             {
-                                new() { AString = "I love it." },
-                                new() { AString = "I hate it." },
-                                new() { AString = "I'm toast." }
+                                new() { AId = 5,  AString = "I love it." },
+                                new() { AId = 6,  AString = "I hate it." },
+                                new() { AId = 7,  AString = "I'm toast." }
                             },
                             AKey = new()
                             {
@@ -73,10 +73,10 @@ namespace QuizCreator.Repos
                             Q = "What's your profile picture?",
                             A = new()
                             {
-                                new() { AString = "Aubrey." },
-                                new() { AString = "Basil." },
-                                new() { AString = "Kel." },
-                                new() { AString = "Sprout mole." }
+                                new() { AId = 8,  AString = "Aubrey." },
+                                new() { AId = 9,  AString = "Basil." },
+                                new() { AId = 10,  AString = "Kel." },
+                                new() { AId = 11,  AString = "Sprout mole." }
                             },
                             AKey = new()
                             {
@@ -91,11 +91,11 @@ namespace QuizCreator.Repos
                             Q = "Yummy Thomas?",
                             A = new()
                             {
-                                new() { AString = "Yummy Thomas. >:3" },
-                                new() { AString = "Yes." },
-                                new() { AString = "Maybe." },
-                                new() { AString = "Not really." },
-                                new() { AString = "No." }
+                                new() { AId = 12,  AString = "Yummy Thomas. >:3" },
+                                new() { AId = 13,  AString = "Yes." },
+                                new() { AId = 14,  AString = "Maybe." },
+                                new() { AId = 15,  AString = "Not really." },
+                                new() { AId = 16,  AString = "No." }
                             },
                             AKey = new()
                             {

@@ -20,10 +20,10 @@ namespace QuizTests
             {
                 Quiz = await repo.GetQuizByIdAsync(1)
             };
-            /*quizVM.UserA.Add("Than.");
-            quizVM.UserA.Add("I hate it.");
-            quizVM.UserA.Add("Aubrey.");
-            quizVM.UserA.Add("No.");*/
+            quizVM.UserA.Add(3);
+            quizVM.UserA.Add(6);
+            quizVM.UserA.Add(8);
+            quizVM.UserA.Add(16);
             Assert.NotNull(quizVM.Quiz);
             quizVM = Scoring.CheckAll(quizVM);
             Assert.Equal(25, Scoring.CheckAll(quizVM).Score);

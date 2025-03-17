@@ -13,8 +13,8 @@ namespace QuizCreator.Tools
             }
             List<string> allowedSites = new()
             {
-                @"^https:\/\/media\.discordapp\.net\/.+\.(jpg|JPG|png|PNG|gif|GIF)(?!(js|exe)$)([^.]+$)",
-                @"^https:\/\/cdn\.discordapp\.com\/.+\.(jpg|JPG|png|PNG|gif|GIF)(?!(js|exe)$)([^.]+$)",
+                @"^https:\/\/media\.discordapp\.net\/.+\.(jpg|JPG|png|PNG|gif|GIF|webp|WEBP)(?!(js|exe)$)([^.]+$)",
+                @"^https:\/\/cdn\.discordapp\.com\/.+\.(jpg|JPG|png|PNG|gif|GIF|webp|WEBP)(?!(js|exe)$)([^.]+$)",
                 @"^https:\/\/images-ext-1\.discordapp\.net\/.+(?!(js|exe)$)([^.]+$)"
             };
             foreach (string site in allowedSites)
