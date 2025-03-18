@@ -4,7 +4,7 @@ namespace QuizCreator.Models
 {
     public class Quiz
     {
-        public int Id { get; set; }
+        public int QuizId { get; set; }
         public string? ImageUrl { get; set; }
         [Required(AllowEmptyStrings = false)]
         [StringLength(100)]
@@ -17,7 +17,7 @@ namespace QuizCreator.Models
         public List<Question>? Questions { get; set; } = new();
         public EndResult? EndResult { get; set; }
         [Required]
-        public AppUser? AppUser { get; set; } = new();
+        public AppUser? AppUser { get; set; }
         public DateTime? Date { get; set; }
         public bool IsComplete { get; set; }
     }

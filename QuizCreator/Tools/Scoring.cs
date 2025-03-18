@@ -11,24 +11,26 @@ namespace QuizCreator.Tools
             {
                 for (int j = 0; j < quizVM.Quiz.Questions[i].A.Count; j++)
                 {
-                    if (quizVM.UserA[i] == quizVM.Quiz.Questions[i].A[j].AString)
+                    if (quizVM.UserA[i] == quizVM.Quiz.Questions[i].A[j].AId)
                     {
                         aKey.Add((bool)quizVM.Quiz.Questions[i].AKey[j].AKeyBool);
                     }
                 }
             }
+            decimal TempScore = 100.00m;
             quizVM.Score = 100;
             for (var i = 0; i < aKey.Count; i++)
             {
                 if (aKey[i] != true)
                 {
-                    quizVM.Score = quizVM.Score - (100 / aKey.Count);
+                    TempScore = TempScore - (100.00m / aKey.Count);
                 }
             }
-            int n = quizVM.Quiz.EndResult.EndTitles.Count;
-            int s = quizVM.Score;
-            quizVM.EndTitle = quizVM.Quiz.EndResult.EndTitles[(n - 1) - ((s * (n - 1)) / 100)].EndResultString;  //Thank you for the math, Logan.
-            quizVM.EndMessage = quizVM.Quiz.EndResult.EndMessages[(n - 1) - ((s * (n - 1)) / 100)].EndResultString;
+            quizVM.Score = (int)Math.Round(TempScore);
+            decimal n = quizVM.Quiz.EndResult.EndTitles.Count;
+            decimal s = TempScore;
+            quizVM.EndTitle = quizVM.Quiz.EndResult.EndTitles[(int)Math.Round((n - 1.00m) - ((s * (n - 1)) / 100.00m))].EndResultString;  //Thank you for the math, Logan.
+            quizVM.EndMessage = quizVM.Quiz.EndResult.EndMessages[(int)Math.Round((n - 1.00m) - ((s * (n - 1)) / 100.00m))].EndResultString;
             return quizVM;
         }
     }

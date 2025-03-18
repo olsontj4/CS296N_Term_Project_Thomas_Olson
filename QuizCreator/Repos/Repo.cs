@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizCreator.Data;
 using QuizCreator.Models;
+using QuizCreator.Models.ViewModels;
+using System.Linq;
 
 namespace QuizCreator.Repos
 {
@@ -11,9 +13,10 @@ namespace QuizCreator.Repos
         {
             context = appDbContext;
         }
-        public List<Quiz> GetAllQuizzes()
+        public async Task<List<Quiz>> GetAllQuizzesAsync()
         {
-            var quizzes = context.Quizzes
+            return await context.Quizzes
+                .Where(q => q.IsComplete == true)
                 .Include(q => q.Questions)
                 .ThenInclude(q => q.A)
                 .Include(q => q.Questions)
@@ -23,12 +26,17 @@ namespace QuizCreator.Repos
                 .Include(q => q.EndResult)
                 .ThenInclude(q => q.EndMessages)
                 .Include(q => q.AppUser)
-                .ToList();
-            return quizzes;
+                .ToListAsync();
         }
-        public Quiz GetQuizById(int id)
+        public async Task<List<Quiz>> GetUserQuizzesAsync(string id, string search)
         {
-            var quiz = context.Quizzes
+            return await context.Quizzes
+                .Where(q => q.AppUser.Id == id)
+                .Where(q => string.IsNullOrEmpty(search) ||
+                    q.Title.Contains(search) ||
+                    q.Description.Contains(search) ||
+                    q.AppUser.UserName.Contains(search)
+                )
                 .Include(q => q.Questions)
                 .ThenInclude(q => q.A)
                 .Include(q => q.Questions)
@@ -38,16 +46,75 @@ namespace QuizCreator.Repos
                 .Include(q => q.EndResult)
                 .ThenInclude(q => q.EndMessages)
                 .Include(q => q.AppUser)
-                .Where(q => q.Id == id)
-                .SingleOrDefault();
-            return quiz;
+                .ToListAsync();
         }
-        public int StoreQuiz(Quiz model)
+        public async Task<List<Quiz>> FilterAllQuizzesAsync(SearchVM searchVM)
+        {
+            IQueryable<Quiz> query = context.Quizzes
+                .Where(q => q.IsComplete == true)
+                .Where(q => string.IsNullOrEmpty(searchVM.Search) ||
+                    q.Title.Contains(searchVM.Search) ||
+                    q.Description.Contains(searchVM.Search) ||
+                    q.AppUser.UserName.Contains(searchVM.Search)
+                )
+                .Where(q => searchVM.Date == null || q.Date == searchVM.Date)
+                .Include(q => q.Questions)
+                    .ThenInclude(q => q.A)
+                .Include(q => q.Questions)
+                    .ThenInclude(q => q.AKey)
+                .Include(q => q.EndResult)
+                    .ThenInclude(q => q.EndTitles)
+                .Include(q => q.EndResult)
+                    .ThenInclude(q => q.EndMessages)
+                .Include(q => q.AppUser);
+            switch (searchVM.SortBy)
+            {
+                case "Date (Newest)":
+                    query = query.OrderByDescending(q => q.Date);
+                    break;
+                case "Name":
+                    query = query.OrderBy(q => q.AppUser.UserName);
+                    break;
+                default:
+                    query = query.OrderBy(q => q.Date);
+                    break;
+            }
+            query = query.Take(searchVM.ResultsPerPage == -1 ? int.MaxValue : searchVM.ResultsPerPage);
+            return await query.ToListAsync();
+        }
+        public async Task<Quiz> GetQuizByIdAsync(int id)
+        {
+            return await context.Quizzes
+                .Where(q => q.QuizId == id)
+                .Include(q => q.Questions)
+                .ThenInclude(q => q.A)
+                .Include(q => q.Questions)
+                .ThenInclude(q => q.AKey)
+                .Include(q => q.EndResult)
+                .ThenInclude(q => q.EndTitles)
+                .Include(q => q.EndResult)
+                .ThenInclude(q => q.EndMessages)
+                .Include(q => q.AppUser)
+                .SingleOrDefaultAsync();
+        }
+        public async Task<int> StoreQuizAsync(Quiz model)
         {
             model.Date = DateTime.Now;
             context.Quizzes.Add(model);
-            return context.SaveChanges();
+            return await context.SaveChangesAsync();
             // returns a positive value if succussful
+        }
+        public async Task<int> UpdateQuizAsync(Quiz model)
+        {
+            model.Date = DateTime.Now;
+            context.Quizzes.Update(model);
+            return await context.SaveChangesAsync();
+        }
+        public async Task<int> DeleteQuizAsync(int id)
+        {
+            var model = await GetQuizByIdAsync(id);
+            context.Quizzes.Remove(model);
+            return context.SaveChanges();
         }
     }
 }

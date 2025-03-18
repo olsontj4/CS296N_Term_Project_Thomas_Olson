@@ -9,12 +9,32 @@
 <article class="container">
     <h2>Featured Quizzes:</h2>
     <div class="row h-100">
-        <div class="card bg-dark-subtle col-lg-4 col-md-6 col-sm-12 col-12 h-100 mb-3 text-center">
-            <h3>@Model[0].Title</h3>
-            <p>@Model[0].Description</p>
-            <p class="text-start float-start">Author: @Model[0].AppUser.UserName &nbsp;</p>
-            <p class="text-sm-start text-start float-start float-sm-end">Posted on: @Model[0].Date.Value.ToShortDateString()</p>
-            <a asp-controller="Quiz" asp-action="Quiz" asp-route-id="@Model[0].Id" type="submit" class="stretched-link"></a>
-        </div>
+        @if (Model.Count != 0)
+        {
+            foreach (Quiz quiz in Model)
+            {
+                <div class="card bg-dark-subtle col-lg-4 col-md-6 col-12 h-100 mb-3 text-center">
+                    @if (quiz.ImageUrl == null)
+                    {
+                        <img style="height: 300px; object-fit: cover;" class="img-fluid rounded pt-2" src="/images/placeholder-image.jpg" />
+                    }
+                    else
+                    {
+                        <img style="height: 300px; object-fit: cover;" class="img-fluid rounded pt-2" src="@quiz.ImageUrl" />
+                    }
+                    <h3>@quiz.Title</h3>
+                    <p>@quiz.Description</p>
+                    <p class="text-start float-start">Author: @quiz.AppUser.UserName &nbsp;</p>
+                    <p class="text-sm-start text-start float-start float-sm-end">Posted on: @quiz.Date.Value.ToShortDateString()</p>
+                    <a asp-controller="Quiz" asp-action="Quiz" asp-route-id="@quiz.QuizId" type="submit" class="stretched-link"></a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center">
+                <p class="text-danger">No quizzes found.</p>
+            </div>
+        }
     </div>
 </article>

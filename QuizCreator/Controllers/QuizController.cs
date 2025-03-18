@@ -4,6 +4,7 @@ using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
 using QuizCreator.Tools;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace QuizCreator.Controllers
 {
@@ -14,43 +15,53 @@ namespace QuizCreator.Controllers
         {
             repo = r;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var quizzes = repo.GetAllQuizzes().Where(q => q.IsComplete == true).ToList();
             var searchVM = new SearchVM();
+            searchVM.ResultsPerPage = 8;
+            var quizzes = await repo.FilterAllQuizzesAsync(searchVM);
+            searchVM.ResultsPerPage = 0;
             searchVM.Quizzes = quizzes;
             return View(searchVM);
         }
-        public IActionResult Search(SearchVM searchVM)
+        public async Task<IActionResult> Search(SearchVM searchVM)
         {
-            if (searchVM.Search != null)
+            if (searchVM.ResultsPerPage == 0)
             {
-                var quizzes = repo.GetAllQuizzes().Where(q => q.Title.Contains(searchVM.Search) || q.Description.Contains(searchVM.Search) || q.AppUser.UserName.Contains(searchVM.Search)).Where(q => q.IsComplete == true).ToList();
-                searchVM.Quizzes = quizzes;
-                return View("Index", searchVM);
+                searchVM.ResultsPerPage = 8;
+                searchVM.Quizzes = await repo.FilterAllQuizzesAsync(searchVM);
+                searchVM.ResultsPerPage = 0;
             }
             else
             {
-                var quizzes = repo.GetAllQuizzes().Where(q => q.IsComplete == true).ToList();
-                searchVM = new SearchVM();
-                searchVM.Quizzes = quizzes;
-                return View("Index", searchVM);
+                searchVM.Quizzes = await repo.FilterAllQuizzesAsync(searchVM);
             }
+            return View("Index", searchVM);
         }
-        public IActionResult Quiz(int id)  //First page of quiz.
+        public async Task<IActionResult> Quiz(int id)  //First page of quiz.
         {
-            var quiz = repo.GetQuizById(id);
-            QuizVM vm = new QuizVM();
-            vm.Quiz = quiz;
-            return View(vm);
+            var quiz = await repo.GetQuizByIdAsync(id);
+            if (quiz != null)
+            {
+                QuizVM vm = new()
+                {
+                    Quiz = quiz
+                };
+                return View(vm);
+            }
+            return RedirectToAction("Index");
         }
-        public IActionResult QuizQuestion([FromForm]QuizVM quizVM)  //Each question in quiz.
+        public async Task<IActionResult> QuizQuestionAsync([FromForm]QuizVM quizVM)  //Each question in quiz.
         {
-            if (quizVM.AnswerInput != null)
+            if (quizVM.Quiz == null)
+            {
+                return RedirectToAction("Index");
+            }
+            if (quizVM.AnswerInput != 0 && quizVM.AnswerInput != null)
             {
                 quizVM.UserA.Add(quizVM.AnswerInput);
             }
-            quizVM.Quiz = repo.GetQuizById(quizVM.Quiz.Id);
+            quizVM.Quiz = await repo.GetQuizByIdAsync(quizVM.Quiz.QuizId);
             if (quizVM.Page > quizVM.Quiz.Questions.Count)  //End results.
             {
                 quizVM = Scoring.CheckAll(quizVM);
@@ -59,8 +70,7 @@ namespace QuizCreator.Controllers
             List<A> answers = quizVM.Quiz.Questions[quizVM.Page - 1].A;
             foreach (var a in answers)
             {
-
-                quizVM.AnswersInView.Add(a.AString);
+                quizVM.AnswersInView.Add(a);
             }
             return View("Quiz", quizVM);
         }

@@ -4,8 +4,9 @@
     {
         public List<Quiz>? Quizzes { get; set; } 
         public string? Search { get; set; }
-        public string? Password { get; set; } = null;
-        public bool SupressWarning { get; set; } = false;
-        public bool CreateAccount { get; set;} = false;
+        public int ResultsPerPage { get; set; }
+        public int Page { get; set; }
+        public string? SortBy { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

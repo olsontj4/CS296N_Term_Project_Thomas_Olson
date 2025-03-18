@@ -6,7 +6,7 @@ namespace QuizCreator.Models
 {
     public class EndResult
     {
-        public int Id { get; set; }
+        public int EndResultId { get; set; }
         [Required]
         public List<EndResultsTitle> EndTitles { get; set; }
         [Required]
@@ -15,17 +15,20 @@ namespace QuizCreator.Models
         public int Score { get; set; }
         [Required]
         public bool DisplayScore { get; set; }
+        public int QuizId { get; set; }
     }
     public class EndResultsTitle
     {
-        public int Id { get; set; }
+        public int EndResultsTitleId { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string EndResultString { get; set; }
+        public int EndResultId { get; set; }
     }
     public class EndResultsMessage
     {
-        public int Id { get; set; }
+        public int EndResultsMessageId { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string EndResultString { get; set; }
+        public int EndResultId { get; set; }
     }
 }

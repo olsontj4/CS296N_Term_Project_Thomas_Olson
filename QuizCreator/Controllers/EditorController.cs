@@ -1,32 +1,52 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using QuizCreator.Models;
 using QuizCreator.Models.ViewModels;
 using QuizCreator.Repos;
 
 namespace QuizCreator.Controllers
 {
+    [Authorize]
     public class EditorController : Controller
     {
         private readonly IRepo repo;
-        public EditorController(IRepo r)
+        private readonly UserManager<AppUser> userManager;
+        public EditorController(IRepo r, UserManager<AppUser> userMngr)
         {
+            userManager = userMngr;
             repo = r;
         }
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             var searchVM = new SearchVM();
+            var appUser = await userManager.GetUserAsync(User);
+            searchVM.Quizzes = await repo.GetUserQuizzesAsync(appUser.Id, string.Empty);
             return View(searchVM);
         }
-        public IActionResult Index(SearchVM searchVM)
+        [HttpPost]
+        public async Task<IActionResult> Index(SearchVM searchVM)
         {
-            if (searchVM.CreateAccount == true)
+            if (searchVM == null)
             {
-                return View(searchVM);
+                searchVM = new SearchVM();
             }
-
-            searchVM.Password = null;
-            var quizzes = repo.GetAllQuizzes().Where(q => q.IsComplete == true).ToList();
+            var appUser = await userManager.GetUserAsync(User);
+            var quizzes = await repo.GetUserQuizzesAsync(appUser.Id, searchVM.Search);
             searchVM.Quizzes = quizzes;
-            return View(searchVM);
+            return View("Index", searchVM);
+        }
+        public async Task<IActionResult> DeleteQuiz(int quizId)
+        {
+            if (await repo.DeleteQuizAsync(quizId) > 0)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Quiz", "Quiz", quizId);
+            }
         }
     }
 }

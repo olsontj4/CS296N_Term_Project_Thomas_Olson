@@ -15,22 +15,26 @@ namespace QuizCreator.Controllers
             repo = r;
             _logger = logger;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var quizzes = new List<Quiz>
+            var featured = new List<int>()
             {
-                repo.GetQuizById(6)
+                6,
+                4
             };
+            var quizzes = new List<Quiz>();
+            for (int i = 0; i < featured.Count; i++)
+            {
+                var quiz = await repo.GetQuizByIdAsync(featured[i]);
+                if (quiz != null)
+                {
+                    quizzes.Add(quiz);
+                }
+            }
             return View(quizzes);
         }
         public IActionResult Privacy()
         {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult UserPage(AppUser user)
-        {
-            List<Quiz> quizzes = new();
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
